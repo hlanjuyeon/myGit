@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org // DTD mapper 3.0 // en" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="commute">
+	<!-- 출근 -->
+	<insert id="attendance"> 
+		INSERT INTO COMMUTE (INTIMEDATE, NO) VALUES
+		(SYSDATE, #{no}) 
+	</insert>
+	<!-- 퇴근 -->
+	<update id="leave"> 
+		UPDATE COMMUTE SET OUTTIME = SYSDATE WHERE NO = #{no} AND 
+		to_char(INTIMEDATE, 'YYYYMMDD') = to_char(SYSDATE,'YYYYMMDD') 
+	
+	</update>
+	<!-- 출퇴근시간 가져오기 -->
+	<select id="viewAttendance" resultType="commuteVO">
+	<![CDATA[ 
+		SELECT * FROM (SELECT * FROM COMMUTE WHERE TO_CHAR(INTIMEDATE,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD') AND NO = #{no} ORDER BY INTIMEDATE DESC) WHERE ROWNUM < 2 
+	]]>
+	</select>
+	
+	<!-- 근태관리 조회  -->
+	<select id="DayCommute" resultType="commuteVO"> 
+		SELECT * FROM (SELECT * FROM COMMUTE 
+		WHERE TO_NUMBER(TO_CHAR(INTIMEDATE,'YYYYMMDD')) between TO_NUMBER(#{startDate}) AND TO_NUMBER(#{endDate}) and NO = #{no} 
+		ORDER BY INTIMEDATE asc)
+	</select> 
+	<!--  475 VS 356 20240101 VS 20240203 A-Z <-> a-z -->
+	<select id="mainCommute" resultType="timeVO"> 
+		SELECT sum(EXTRACT(Hour from (OUTTIME - INTIMEDATE))) as h, sum(EXTRACT(minute from (OUTTIME - INTIMEDATE))) as m 
+		FROM COMMUTE WHERE TO_NUMBER(TO_CHAR(INTIMEDATE,'YYYYMMDD')) between TO_NUMBER(#{startDate}) AND 
+		TO_NUMBER(#{endDate}) and NO=#{no} 
+	</select>		
+</mapper>

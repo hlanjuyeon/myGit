@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.globalin.shine.mapper.dayoff.DayOffMapper">
+
+   <!--  <select id="readList" resultType="dayOffVO">
+    <![CDATA[]
+    SELECT USEDATE, KIND, REASON 
+    FROM
+    (
+    SELECT /*+ INDEX_DESC(DAYOFFLIST EMPLOYEE_PK)*/ 
+    ROWNUM RN, USEDATE, KIND, REASON 
+    FROM DAYOFFLIST WHERE DayOffList.no = #{no} AND ROWNUM <= #{pageNum} * #{amount}
+    )
+    WHERE RN > (#{pageNum} - 1) * #{amount};
+    ]]>
+    </select> -->
+	
+	<!-- 개인 정보조회 -->
+	<select id="readInfo" resultType="dayOffVO">
+	SELECT Employee.name, dayOffinfo.no, dayOffinfo.Total, dayOffinfo.Remind, dayOffinfo.UsedTotal
+    FROM Employee inner join dayOffinfo ON Employee.no = dayOffinfo.no where Employee.no =#{no}
+	</select>
+	
+	<!-- 개인 사용내역 조회 -->
+	<select id="readList" resultType="com.globalin.shine.domain.approval.ApprovalVO">
+    select yearUseDays, yearUseDateStart, yearUseDateEnd, yearAmPm, yearReason
+    from approval
+    where writerNo = #{loginNo}
+	</select>
+	
+	<!-- 관리자 전체 리스트 조회 -->
+	<select id="getInfo" resultType="dayOffVO">
+	SELECT Employee.no, Employee.name, dayOffinfo.Total, dayOffinfo.Remind, dayOffinfo.UsedTotal
+    FROM Employee inner join dayOffinfo ON Employee.no = dayOffinfo.no
+	</select>
+	
+	<!-- 관리자 상세보기  -->
+	<select id="viewDetailsInfo" resultType="dayOffVO">
+	SELECT Employee.name, dayOffinfo.no, dayOffinfo.Total, dayOffinfo.Remind, dayOffinfo.UsedTotal
+    FROM Employee 
+    inner join dayOffinfo ON Employee.no = dayOffinfo.no where Employee.no =#{no}
+	</select>
+	
+	<select id="viewDetailsList" resultType="com.globalin.shine.domain.approval.ApprovalVO">
+	select yearUseDays, yearUseDateStart, yearUseDateEnd, yearAmPm, yearReason
+    from approval
+    inner join dayOffinfo ON approval.writerNo = dayOffinfo.no where dayOffinfo.no = #{no}
+	</select>
+	
+	<!-- 관리자 업데이트 -->
+	<update id="updateInfo">
+	UPDATE DayOffinfo SET TOTAL = #{total} WHERE NO = #{no}
+	</update>
+</mapper>

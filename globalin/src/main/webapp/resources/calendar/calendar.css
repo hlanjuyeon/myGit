@@ -1,0 +1,29 @@
+/* 노트북 & PC */ 
+@media all and (min-width:1080px) and (max-width:1920px) {
+    
+} 
+  
+/* 테블릿 가로, 테블릿 세로 */ 
+@media all and (min-width:768px) and (max-width:1024px) {
+    
+} 
+  
+/* 모바일 가로, 모바일 세로 */ 
+@media all and (min-width:360px) and (max-width:800px) {
+   
+}
+
+.write_border {
+    min-width: calc(100% - 240px);
+    position: fixed;
+    margin-left: 215px;
+    top: 13%;
+    border: 2px solid black;
+    border-radius: 20px;
+    height: 80%;
+    max-width: 931px;
+}
+
+.fc-direction-ltr {
+    height: 100%;
+}

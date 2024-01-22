@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.globalin.shine.mapper.calendar.CalendarMapper">
+	<select id="getCalendarList" resultType="Map" parameterType="String">
+		SELECT 
+			no,
+			title, 
+			SUBSTR(startday, 1, 10) || ' ' || SUBSTR(startday, 12, 5) AS startday,
+			SUBSTR(endday, 1, 10) || ' ' || SUBSTR(endday, 12, 5) AS endday,
+			allday,
+			content,
+			location,
+			attendee,
+			repeat,
+			privacy,
+			color,
+			writer,
+			emp_no
+		FROM CALENDAR
+	</select>
+	<select id="getCalendarByNo" resultType="java.util.HashMap" parameterType="int">
+		SELECT 
+			no,
+			title, 
+			startday,
+			endday,
+			allday,
+			content,
+			location,
+			attendee,
+			repeat,
+			privacy,
+			color,
+			writer,
+			emp_no
+		FROM CALENDAR
+		WHERE no = #{no}
+	</select>
+	<insert id="insert"><!-- 
+        INSERT INTO calendar 
+        	(title, startday, endday, allday, content, location, attendee, repeat, privacy, color, emp_no)
+        VALUES (#{title}, #{startday}, #{endday}, #{allday}, #{content}, #{location}, #{attendee}, #{repeat}, #{privacy}, #{color}, #{emp_no}) -->
+        INSERT INTO calendar 
+        	(title, location, attendee, startday, endday, content, color, allday , privacy, writer)
+        VALUES (#{title}, #{location}, #{attendee}, #{startday}, #{endday}, #{content}, #{color}, #{allday}, #{privacy}, #{writer})
+    </insert>
+    <delete id="delete" parameterType="int">
+    	DELETE FROM CALENDAR WHERE no = #{no}
+    </delete>
+    <update id="update">
+    	UPDATE calendar
+   			SET title = #{title},
+     			location = #{location},
+     			attendee = #{attendee},
+     			startday = #{startday},
+     			endday = #{endday},
+     			content = #{content},
+     			allday = #{allday},
+     			privacy = #{privacy}
+ 		WHERE no = #{no}
+    </update>
+</mapper>

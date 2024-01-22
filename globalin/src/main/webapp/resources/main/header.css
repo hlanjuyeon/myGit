@@ -1,0 +1,12 @@
+.logo {
+	min-width: 10%;
+	height: 80px;
+}
+
+.header-right {
+	display: flex;
+    font-weight: bold;
+    font-size: 30px;
+    align-items: end;
+	    margin-left: 1380px;
+}
