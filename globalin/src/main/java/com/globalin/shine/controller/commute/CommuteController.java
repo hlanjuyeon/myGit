@@ -37,14 +37,14 @@ public class CommuteController {
 	
 	// CommuteRecord
 	/*
-	 * date 		: 날짜			(String)
-	 * intime 		: 출근 날짜		(String)
-	 * outtime 		: 퇴근 날짜		(String)
-	 * overtime		: 초과 근무 시간	(String)
-	 * nighttime 	: 야간 근무 시간	(String)
-	 * holidaytime	: 휴일 근무 시간	(String)
-	 * sumtime		: 당일 총 근무 시간 -> summation(long)을 문자열 형태로 HH:mm:ss
-	 * summation	: 당일 총 근무 시간 -> 근무 시간을 초 단위로 저장
+	 * date 		: �궇吏�			(String)
+	 * intime 		: 異쒓렐 �궇吏�		(String)
+	 * outtime 		: �눜洹� �궇吏�		(String)
+	 * overtime		: 珥덇낵 洹쇰Т �떆媛�	(String)
+	 * nighttime 	: �빞媛� 洹쇰Т �떆媛�	(String)
+	 * holidaytime	: �쑕�씪 洹쇰Т �떆媛�	(String)
+	 * sumtime		: �떦�씪 珥� 洹쇰Т �떆媛� -> summation(long)�쓣 臾몄옄�뿴 �삎�깭濡� HH:mm:ss
+	 * summation	: �떦�씪 珥� 洹쇰Т �떆媛� -> 洹쇰Т �떆媛꾩쓣 珥� �떒�쐞濡� ���옣
 	 */
 	public class CommuteRecord {
 		String date;			
@@ -56,50 +56,50 @@ public class CommuteController {
 		String sumtime;
 		long summation;
 		
-		public CommuteRecord(String d) { // 근무 기록이 없는 경우에는 Date만 초기화
+		public CommuteRecord(String d) { // 洹쇰Т 湲곕줉�씠 �뾾�뒗 寃쎌슦�뿉�뒗 Date留� 珥덇린�솕
 			date = d;
 			intime = outtime = overtime = nighttime = holidaytime = sumtime = " ";
 			summation = 0;
 		}
 		
-		public CommuteRecord(Timestamp in, Timestamp out) throws ParseException { // 출근 기록이 존재하면 / 퇴근 기록은 없을 수 있음
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 	// 날짜 추출 SimpleDateFormat
-			SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");		// 시간 추출 SimpleDateFormat
-			date = dateFormat.format(in);		// 출근 기록 일자
-			intime = timeFormat.format(in);		// 출근 기록 시간
+		public CommuteRecord(Timestamp in, Timestamp out) throws ParseException { // 異쒓렐 湲곕줉�씠 議댁옱�븯硫� / �눜洹� 湲곕줉�� �뾾�쓣 �닔 �엳�쓬
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 	// �궇吏� 異붿텧 SimpleDateFormat
+			SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");		// �떆媛� 異붿텧 SimpleDateFormat
+			date = dateFormat.format(in);		// 異쒓렐 湲곕줉 �씪�옄
+			intime = timeFormat.format(in);		// 異쒓렐 湲곕줉 �떆媛�
 			
-			if(out == null) { // 퇴근 기록이 존재하지 않으면
-				outtime = overtime = nighttime = holidaytime = " "; // 근무 시간을 계산하지 않음
+			if(out == null) { // �눜洹� 湲곕줉�씠 議댁옱�븯吏� �븡�쑝硫�
+				outtime = overtime = nighttime = holidaytime = " "; // 洹쇰Т �떆媛꾩쓣 怨꾩궛�븯吏� �븡�쓬
 				summation = 0; 
 				sumtime = "00:00:00";
-			} else { // 퇴근 기록이 존재하면 계산이 필요함
-				outtime = timeFormat.format(out); // 퇴근 시간 추출
+			} else { // �눜洹� 湲곕줉�씠 議댁옱�븯硫� 怨꾩궛�씠 �븘�슂�븿
+				outtime = timeFormat.format(out); // �눜洹� �떆媛� 異붿텧
 				
-				Timestamp tOut = new Timestamp(timeFormat.parse(outtime).getTime());		// 퇴근 시간
-				Timestamp tTemp = new Timestamp(timeFormat.parse("18:00:00").getTime());	// 18:00:00시
-				Duration dTemp;	// 차이를 저장하기 위한 Duration
+				Timestamp tOut = new Timestamp(timeFormat.parse(outtime).getTime());		// �눜洹� �떆媛�
+				Timestamp tTemp = new Timestamp(timeFormat.parse("18:00:00").getTime());	// 18:00:00�떆
+				Duration dTemp;	// 李⑥씠瑜� ���옣�븯湲� �쐞�븳 Duration
 				
-				/* overtime 계산 */
-				if(tOut.after(tTemp)) { // 만약, 퇴근시간이 18시 이후면 overtime 계산
-					tTemp = new Timestamp(timeFormat.parse("22:00:00").getTime()); // 만약, 퇴근 시간이 22시 이후면 nighttime 계산
-					if(tOut.before(tTemp)) { // 10시 이전 퇴근이면 오후 6 ~ 퇴근시간까지 overtime
-						// 18:00 ~ 퇴근 시간까지 계산
+				/* overtime 怨꾩궛 */
+				if(tOut.after(tTemp)) { // 留뚯빟, �눜洹쇱떆媛꾩씠 18�떆 �씠�썑硫� overtime 怨꾩궛
+					tTemp = new Timestamp(timeFormat.parse("22:00:00").getTime()); // 留뚯빟, �눜洹� �떆媛꾩씠 22�떆 �씠�썑硫� nighttime 怨꾩궛
+					if(tOut.before(tTemp)) { // 10�떆 �씠�쟾 �눜洹쇱씠硫� �삤�썑 6 ~ �눜洹쇱떆媛꾧퉴吏� overtime
+						// 18:00 ~ �눜洹� �떆媛꾧퉴吏� 怨꾩궛
 						dTemp = Duration.between(new Timestamp(timeFormat.parse("18:00:00").getTime()).toLocalDateTime().toLocalTime(), tOut.toLocalDateTime().toLocalTime());
 						long Hour = dTemp.toHours();
 						long Min = dTemp.toMinutesPart();
 						long Sec = dTemp.toSecondsPart();
 						overtime = String.format("%02d:%02d:%02d", Hour, Min, Sec);
-					} else { // 10시 이후 퇴근이면 초과 4시
+					} else { // 10�떆 �씠�썑 �눜洹쇱씠硫� 珥덇낵 4�떆
 						overtime = "04:00:00";
 					}
-				} else { // 초과 없으면
+				} else { // 珥덇낵 �뾾�쑝硫�
 					overtime = " ";
 				}
 				
-				/* nighttime 계산 */
-				tTemp = new Timestamp(timeFormat.parse("22:00:00").getTime()); // 22:00:00시
-				if(tOut.after(tTemp)) {// 퇴근시간이 22:00:00시 이후면 야간 근로 시간 계산 nightTime
-					dTemp = Duration.between(tTemp.toLocalDateTime().toLocalTime(), out.toLocalDateTime().toLocalTime()); // 22:00 ~ 퇴근 시간
+				/* nighttime 怨꾩궛 */
+				tTemp = new Timestamp(timeFormat.parse("22:00:00").getTime()); // 22:00:00�떆
+				if(tOut.after(tTemp)) {// �눜洹쇱떆媛꾩씠 22:00:00�떆 �씠�썑硫� �빞媛� 洹쇰줈 �떆媛� 怨꾩궛 nightTime
+					dTemp = Duration.between(tTemp.toLocalDateTime().toLocalTime(), out.toLocalDateTime().toLocalTime()); // 22:00 ~ �눜洹� �떆媛�
 					long Hour = dTemp.toHours();
 					long Min = dTemp.toMinutesPart();
 					long Sec = dTemp.toSecondsPart();
@@ -108,12 +108,12 @@ public class CommuteController {
 					nighttime = " ";
 				}
 				
-				/* 주말 근무 시간 계산 */
+				/* 二쇰쭚 洹쇰Т �떆媛� 怨꾩궛 */
 				Calendar cal = Calendar.getInstance();
-				cal.setTime(dateFormat.parse(date)); // calendar를 출근 날짜로 설정
-				int dayofweek = cal.get(Calendar.DAY_OF_WEEK); // 출근 날짜 요일 가져오기
-				if(dayofweek == 1 || dayofweek == 7) { // 일요일(1) 이거나 토요일(7) 이면 휴일 근무 시간으로 계산
-					dTemp = Duration.between(in.toLocalDateTime().toLocalTime(), out.toLocalDateTime().toLocalTime()); // 출근 ~ 퇴근까지
+				cal.setTime(dateFormat.parse(date)); // calendar瑜� 異쒓렐 �궇吏쒕줈 �꽕�젙
+				int dayofweek = cal.get(Calendar.DAY_OF_WEEK); // 異쒓렐 �궇吏� �슂�씪 媛��졇�삤湲�
+				if(dayofweek == 1 || dayofweek == 7) { // �씪�슂�씪(1) �씠嫄곕굹 �넗�슂�씪(7) �씠硫� �쑕�씪 洹쇰Т �떆媛꾩쑝濡� 怨꾩궛
+					dTemp = Duration.between(in.toLocalDateTime().toLocalTime(), out.toLocalDateTime().toLocalTime()); // 異쒓렐 ~ �눜洹쇨퉴吏�
 					long Hour = dTemp.toHours();
 					long Min = dTemp.toMinutesPart();
 					long Sec = dTemp.toSecondsPart();
@@ -122,7 +122,7 @@ public class CommuteController {
 					holidaytime = " ";
 				}
 				
-				// 총 근무 시간 (출근 ~ 퇴근)
+				// 珥� 洹쇰Т �떆媛� (異쒓렐 ~ �눜洹�)
 				summation = Duration.between(in.toLocalDateTime().toLocalTime(), out.toLocalDateTime().toLocalTime()).getSeconds();
 				sumtime = String.format("%02d:%02d:%02d", (int)(summation / 3600), (int)((summation % 3600)/60), (int)((summation % 3600)%60));
 			}	
@@ -137,7 +137,7 @@ public class CommuteController {
 			*/
 		}
 
-		// JSP 에서 표현하기 위해서 쓰이는 Getter
+		// JSP �뿉�꽌 �몴�쁽�븯湲� �쐞�빐�꽌 �벐�씠�뒗 Getter
 		public String getDate() {
 			return date;
 		}
@@ -171,7 +171,7 @@ public class CommuteController {
 		}
 	}
 	
-	// 출근
+	// 異쒓렐
 	@RequestMapping(value = "commute", method = RequestMethod.POST)
 	public ModelAndView attendance(CommuteVO commuteVO, ModelAndView mv, HttpServletRequest request, Model model) throws Exception {
 		HttpSession session = request.getSession();
@@ -205,7 +205,7 @@ public class CommuteController {
 		return mv;
 	}
 	
-	// 퇴근
+	// �눜洹�
 	@RequestMapping(value = "leave", method = RequestMethod.POST)
 	public ModelAndView leave(CommuteVO commuteVO, ModelAndView mv, HttpServletRequest request, Model model) throws Exception {
 		HttpSession session = request.getSession();
@@ -235,12 +235,12 @@ public class CommuteController {
 		return mv;
 	}
 	
-	//일간근태관리
+	//�씪媛꾧렐�깭愿�由�
 	@RequestMapping(value = "/commute/dayWork", method = RequestMethod.GET)
 	public ModelAndView dayWork(HttpSession session, CommuteVO commuteVO, Model mv, HttpServletRequest request) throws Exception {
 		session = request.getSession();
 		ModelAndView mav = new ModelAndView();
-		System.out.println("일간근태관리 페이지 GET");
+		System.out.println("�씪媛꾧렐�깭愿�由� �럹�씠吏� GET");
 		
 		int num = (int)session.getAttribute("no");
 		mav.setViewName("/commute/dayWork"); // Default Setting
@@ -268,32 +268,32 @@ public class CommuteController {
 		
 		// Calculate Duration
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
-		LocalDate d1 = LocalDate.parse(startDate, dtf);	// startDate 부터
-		LocalDate d2 = LocalDate.parse(endDate, dtf);	// endDate 까지
-		long dur = Duration.between(d1.atStartOfDay(), d2.atStartOfDay()).toDays() + 1; // startDate ~ endDate까지 총 일수 계산
+		LocalDate d1 = LocalDate.parse(startDate, dtf);	// startDate 遺��꽣
+		LocalDate d2 = LocalDate.parse(endDate, dtf);	// endDate 源뚯�
+		long dur = Duration.between(d1.atStartOfDay(), d2.atStartOfDay()).toDays() + 1; // startDate ~ endDate源뚯� 珥� �씪�닔 怨꾩궛
 		
 		// Add records
 		List<CommuteRecord> records = new ArrayList<>();
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(java.sql.Date.valueOf(d1)); // Calendar를 startDate로 설정
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");		// 날짜 출력
-		SimpleDateFormat viewFormat = new SimpleDateFormat("yyyy-MM-dd");	// View 출력 용
+		cal.setTime(java.sql.Date.valueOf(d1)); // Calendar瑜� startDate濡� �꽕�젙
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");		// �궇吏� 異쒕젰
+		SimpleDateFormat viewFormat = new SimpleDateFormat("yyyy-MM-dd");	// View 異쒕젰 �슜
 		int idx = 0;
-		for(int i = 0 ; i < dur; i++) { // startDate ~ endDate까지 진행 ex) 1.1 ~ 1.30 일까지 진행
+		for(int i = 0 ; i < dur; i++) { // startDate ~ endDate源뚯� 吏꾪뻾 ex) 1.1 ~ 1.30 �씪源뚯� 吏꾪뻾
 			//System.out.println(dateFormat.format(new Timestamp(cal.getTimeInMillis())));
 			//System.out.println(dateFormat.format(list.get(idx).getIntimeDate()));
-			if(idx < list.size() &&	// 근태 기록에서 가장 마지막 날짜가 계산 안 되었으면 -> 아직 계산할 근태 기록이 남아있으면
-					dateFormat.format(new Timestamp(cal.getTimeInMillis())).equals(dateFormat.format(list.get(idx).getIntimeDate()))) { // cal[i] == list[idx] -> 현재 처리중인 일자와 같은지 비교
-				// if 현재 계산 중인 일자에 근태 기록 시간이 있으면
-				records.add(new CommuteRecord(list.get(idx).getIntimeDate(), list.get(idx).getOutTime())); // CommuteRecord Class를 통해서 출퇴근 시간을 이용하여 자동으로 여러 근무시간 계산
-				// 출근 시간과 퇴근 시간을 이용하여 CommuteRecord를 생성, 자동으로 초과, 야간, 휴일, 총 근무시간 계산 후 records List에 추가.
+			if(idx < list.size() &&	// 洹쇳깭 湲곕줉�뿉�꽌 媛��옣 留덉�留� �궇吏쒓� 怨꾩궛 �븞 �릺�뿀�쑝硫� -> �븘吏� 怨꾩궛�븷 洹쇳깭 湲곕줉�씠 �궓�븘�엳�쑝硫�
+					dateFormat.format(new Timestamp(cal.getTimeInMillis())).equals(dateFormat.format(list.get(idx).getIntimeDate()))) { // cal[i] == list[idx] -> �쁽�옱 泥섎━以묒씤 �씪�옄�� 媛숈�吏� 鍮꾧탳
+				// if �쁽�옱 怨꾩궛 以묒씤 �씪�옄�뿉 洹쇳깭 湲곕줉 �떆媛꾩씠 �엳�쑝硫�
+				records.add(new CommuteRecord(list.get(idx).getIntimeDate(), list.get(idx).getOutTime())); // CommuteRecord Class瑜� �넻�빐�꽌 異쒗눜洹� �떆媛꾩쓣 �씠�슜�븯�뿬 �옄�룞�쑝濡� �뿬�윭 洹쇰Т�떆媛� 怨꾩궛
+				// 異쒓렐 �떆媛꾧낵 �눜洹� �떆媛꾩쓣 �씠�슜�븯�뿬 CommuteRecord瑜� �깮�꽦, �옄�룞�쑝濡� 珥덇낵, �빞媛�, �쑕�씪, 珥� 洹쇰Т�떆媛� 怨꾩궛 �썑 records List�뿉 異붽�.
 				idx++;
-				// 현재 일자의 근태 기록은 계산되었으니 다음 근태 기록으로 설정
+				// �쁽�옱 �씪�옄�쓽 洹쇳깭 湲곕줉�� 怨꾩궛�릺�뿀�쑝�땲 �떎�쓬 洹쇳깭 湲곕줉�쑝濡� �꽕�젙
 			} else {
-				// 만약 계산 중인 날짜에 근태 기록이 없으면, CommuteRecord에 날짜만 추가, records List에 추가
+				// 留뚯빟 怨꾩궛 以묒씤 �궇吏쒖뿉 洹쇳깭 湲곕줉�씠 �뾾�쑝硫�, CommuteRecord�뿉 �궇吏쒕쭔 異붽�, records List�뿉 異붽�
 				records.add(new CommuteRecord(viewFormat.format(new Timestamp(cal.getTimeInMillis()))));
 			}	
-			cal.add(Calendar.DATE, 1); // 계산 중인 날짜 + 1
+			cal.add(Calendar.DATE, 1); // 怨꾩궛 以묒씤 �궇吏� + 1
 		}
 
 		mav.addObject("list", records);
@@ -301,12 +301,12 @@ public class CommuteController {
 		return mav;
 	}
 	
-	//주간근태관리
+	//二쇨컙洹쇳깭愿�由�
 	@RequestMapping(value = "/commute/weekWork", method = RequestMethod.GET)
 	public ModelAndView weekWork(HttpSession session, CommuteVO commuteVO, Model mv, HttpServletRequest request) throws Exception {
 		session = request.getSession();
 		ModelAndView mav = new ModelAndView();
-		System.out.println("주간근태관리 페이지 진입!");
+		System.out.println("二쇨컙洹쇳깭愿�由� �럹�씠吏� 吏꾩엯!");
 		
 		int num = (int)session.getAttribute("no");
 		mav.setViewName("/commute/weekWork"); // Default Setting
@@ -315,12 +315,12 @@ public class CommuteController {
 		String calendar = request.getParameter("calendar");
 		String startDate = "";
 		String endDate = "";
-		if(calendar == null || calendar.equals("") || calendar.equals("null")) { // 주차 입력이 안된 경우 ex) 아예 처음 접속
+		if(calendar == null || calendar.equals("") || calendar.equals("null")) { // 二쇱감 �엯�젰�씠 �븞�맂 寃쎌슦 ex) �븘�삁 泥섏쓬 �젒�냽
 			cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 			startDate = new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
 			cal.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
 			endDate = new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
-		} else { // 입력이 된 경우
+		} else { // �엯�젰�씠 �맂 寃쎌슦
 			String[] year_week = calendar.split("-W"); // 2024-W02 -> 2024 / 02
 			cal.set(Calendar.YEAR, Integer.parseInt(year_week[0]));
 			cal.set(Calendar.WEEK_OF_YEAR, Integer.parseInt(year_week[1]));
@@ -369,12 +369,12 @@ public class CommuteController {
 		return mav;
 	}
 	
-	//월간근태관리
+	//�썡媛꾧렐�깭愿�由�
 	@RequestMapping(value = "/commute/monthWork", method = RequestMethod.GET)
 	public ModelAndView monthWork(HttpSession session, CommuteVO commuteVO, Model mv, HttpServletRequest request) throws Exception {
 		session = request.getSession();
 		ModelAndView mav = new ModelAndView();
-		System.out.println("월간근태관리 페이지 진입!");
+		System.out.println("�썡媛꾧렐�깭愿�由� �럹�씠吏� 吏꾩엯!");
 		
 		int num = (int)session.getAttribute("no");
 		mav.setViewName("/commute/monthWork"); // Default Setting
@@ -383,12 +383,12 @@ public class CommuteController {
 		String calendar = request.getParameter("calendar");
 		String startDate = "";
 		String endDate = "";
-		if(calendar == null || calendar.equals("") || calendar.equals("null")) { // 월 입력이 안된 경우 sysdate달의 첫날 부터 마지막날까지 출력
+		if(calendar == null || calendar.equals("") || calendar.equals("null")) { // �썡 �엯�젰�씠 �븞�맂 寃쎌슦 sysdate�떖�쓽 泥ル궇 遺��꽣 留덉�留됰궇源뚯� 異쒕젰
 			cal.set(Calendar.DAY_OF_MONTH, 1);
 			startDate = new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
 			cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
 			endDate = new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
-		} else { // 월 입력이 존재하는 경우 해당 월의 첫날부터 마지막날까지 출력
+		} else { // �썡 �엯�젰�씠 議댁옱�븯�뒗 寃쎌슦 �빐�떦 �썡�쓽 泥ル궇遺��꽣 留덉�留됰궇源뚯� 異쒕젰
 			String[] year_week = calendar.split("-"); 
 			cal.set(Calendar.YEAR, Integer.parseInt(year_week[0]));
 			cal.set(Calendar.MONTH, Integer.parseInt(year_week[1])-1);
