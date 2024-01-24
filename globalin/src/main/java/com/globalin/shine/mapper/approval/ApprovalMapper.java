@@ -33,9 +33,13 @@ public interface ApprovalMapper {
     public List<EmployeeVO> getDeptList();
     public List<EmployeeVO> getUserList();
     public void updateApp(ApprovalVO approval);
+    public void updateState(ApprovalVO approval);
     public void updateOriginNo(ApprovalVO approval);
     
     public DayOffVO selectTotal(int no);
     public DayOffVO selectRemind(int no);
     public ApprovalVO selectTemp(int no);
+    public ApprovalVO selectInbox(int no);
+    
+    public List<ApprovalVO> getListPagingInYet(Criteria criteria);
 }

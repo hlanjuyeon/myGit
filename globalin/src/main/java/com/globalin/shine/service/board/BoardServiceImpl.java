@@ -72,5 +72,10 @@ public class BoardServiceImpl implements BoardService {
 	public boolean removeReply(Long bno) {
 		return boardDAO.removeReply(bno);
 	}
+	
+	@Override
+	public List<BoardVO> getListMain(Criteria criteria){
+		return boardDAO.getListMain(criteria);
+	}
 
 }

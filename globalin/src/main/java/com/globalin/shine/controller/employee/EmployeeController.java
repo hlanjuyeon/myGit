@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,10 +19,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.globalin.shine.domain.board.Criteria;
+import com.globalin.shine.domain.board.PageDTO;
 import com.globalin.shine.domain.commute.CommuteVO;
 import com.globalin.shine.domain.commute.TimeVO;
 import com.globalin.shine.domain.employee.EmployeeVO;
 import com.globalin.shine.service.approval.ApprovalService;
+import com.globalin.shine.service.board.BoardService;
 import com.globalin.shine.service.commute.CommuteService;
 import com.globalin.shine.service.employee.EmployeeService;
 
@@ -40,6 +44,9 @@ public class EmployeeController {
 	
 	@Autowired
 	ApprovalService approvalService;
+	
+	@Autowired
+	private BoardService boardService;
 	
 	// 로그인 화면
 	@RequestMapping(value="/", method = RequestMethod.GET)
@@ -96,7 +103,7 @@ public class EmployeeController {
 	
 	// 메인 화면
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public ModelAndView main(HttpServletRequest request, ModelAndView mav, CommuteVO commuteVO, TimeVO timeVO, int no, Model model) {
+	public ModelAndView main(HttpServletRequest request, ModelAndView mav, CommuteVO commuteVO, TimeVO timeVO, int no, Model model, Criteria criteria) {
 		HttpSession session = request.getSession();
 		String str = (String)session.getAttribute("id");
 		System.out.println("메인 get");
@@ -175,7 +182,9 @@ public class EmployeeController {
 		model.addAttribute("total", approvalService.selectTotal(no));
 		model.addAttribute("remind", approvalService.selectRemind(no));
 		model.addAttribute("temp", approvalService.selectTemp(no));
-		
+		model.addAttribute("inbox", approvalService.selectInbox(no));
+		model.addAttribute("boardList", boardService.getListMain(criteria));
+		model.addAttribute("pageDTO", new PageDTO(boardService.getTotal(criteria), criteria));
 		return mav;
 	}
 

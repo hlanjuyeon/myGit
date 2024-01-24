@@ -114,7 +114,7 @@ $(document).ready(function() {
 			            <option value="" >문서종류를 선택해주세요.</option>
 			            <option value="기안">기안</option>
 			            <option value="품의">품의</option>
-			            <option value="연차">연차</option>
+			            <option value="연차" disabled>연차</option>
 			            <option value="보고">보고</option>
 			            <option value="지출결의">지출결의</option>
 			            <option value="출퇴근">출퇴근</option>
@@ -241,8 +241,6 @@ $(document).ready(function() {
 	            <button type="button" class="my_btn" onclick="location.href='/approval/list'">취소하기</button>
 	            <button type="submit" class="write_btn" id="send_list">상신하기</button>
 	        </div>
-    	
-		
     </form>
 </div>
 </body>

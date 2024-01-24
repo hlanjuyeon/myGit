@@ -19,4 +19,6 @@ public interface BoardMapper {
 	public int getTotal(Criteria criteria);
 	public List<FileVO> getFiles(Long bno);
 	public int deleteReply(Long bno);
+	
+	public List<BoardVO> getListMain(Criteria criteria);
 }

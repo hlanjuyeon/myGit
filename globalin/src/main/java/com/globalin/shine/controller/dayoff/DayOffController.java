@@ -65,8 +65,8 @@ public class DayOffController {
 	@GetMapping("/viewDetails")
 	public void viewDetailsList(int no, Model model) {
 		log.info("/viewDetails : " + no );
-	model.addAttribute("dayOffInfo",dayOffService.viewDetailsInfo(no));
-	model.addAttribute("dayOffList",dayOffService.viewDetailsList(no));
-		}
+		model.addAttribute("dayOffInfo",dayOffService.viewDetailsInfo(no));
+		model.addAttribute("dayOffList",dayOffService.viewDetailsList(no));
+	}
 	
 }

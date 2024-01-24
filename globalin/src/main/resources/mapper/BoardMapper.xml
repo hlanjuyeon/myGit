@@ -30,7 +30,7 @@
 			SELECT BNO, TITLE, CONTENT, DEPTNAME, NAME, REGDATE, UPDATEDATE 
 			FROM
 			(
-				SELECT /*+ INDEX_DESC(TBL_BOARD, PK_BOARD)*/ 
+				SELECT /*+ INDEX_DESC(TBL_BOARD, PK_BD)*/ 
 				ROWNUM RN, BNO, TITLE, CONTENT, DEPTNAME, NAME, REGDATE, UPDATEDATE
 				FROM TBL_BOARD WHERE 
 			<include refid="search"/>
@@ -41,6 +41,19 @@
 		<![CDATA[
 			WHERE RN  > (#{pageNum} - 1) * #{amount}
 		]]>
+	</select>
+	
+	<select id="getListMain" resultType="boardVO">
+			SELECT BNO, TITLE, CONTENT, DEPTNAME, NAME, REGDATE, UPDATEDATE 
+			FROM
+			(
+				SELECT /*+ INDEX_DESC(TBL_BOARD, PK_BD)*/ 
+				ROWNUM RN, BNO, TITLE, CONTENT, DEPTNAME, NAME, REGDATE, UPDATEDATE
+				FROM TBL_BOARD WHERE 
+			<![CDATA[	
+				ROWNUM <= 3
+			]]>
+			)
 	</select>
 	
 	<insert id="insert">

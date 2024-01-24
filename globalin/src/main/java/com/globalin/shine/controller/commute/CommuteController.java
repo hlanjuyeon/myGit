@@ -86,8 +86,8 @@ public class CommuteController {
 						// 18:00 ~ �눜洹� �떆媛꾧퉴吏� 怨꾩궛
 						dTemp = Duration.between(new Timestamp(timeFormat.parse("18:00:00").getTime()).toLocalDateTime().toLocalTime(), tOut.toLocalDateTime().toLocalTime());
 						long Hour = dTemp.toHours();
-						long Min = dTemp.toMinutesPart();
-						long Sec = dTemp.toSecondsPart();
+						long Min = dTemp.toMinutes();
+						long Sec = dTemp.getSeconds();
 						overtime = String.format("%02d:%02d:%02d", Hour, Min, Sec);
 					} else { // 10�떆 �씠�썑 �눜洹쇱씠硫� 珥덇낵 4�떆
 						overtime = "04:00:00";
@@ -101,8 +101,8 @@ public class CommuteController {
 				if(tOut.after(tTemp)) {// �눜洹쇱떆媛꾩씠 22:00:00�떆 �씠�썑硫� �빞媛� 洹쇰줈 �떆媛� 怨꾩궛 nightTime
 					dTemp = Duration.between(tTemp.toLocalDateTime().toLocalTime(), out.toLocalDateTime().toLocalTime()); // 22:00 ~ �눜洹� �떆媛�
 					long Hour = dTemp.toHours();
-					long Min = dTemp.toMinutesPart();
-					long Sec = dTemp.toSecondsPart();
+					long Min = dTemp.toMinutes();
+					long Sec = dTemp.getSeconds();
 					nighttime = String.format("%02d:%02d:%02d", Hour, Min, Sec);
 				} else {
 					nighttime = " ";
@@ -115,8 +115,8 @@ public class CommuteController {
 				if(dayofweek == 1 || dayofweek == 7) { // �씪�슂�씪(1) �씠嫄곕굹 �넗�슂�씪(7) �씠硫� �쑕�씪 洹쇰Т �떆媛꾩쑝濡� 怨꾩궛
 					dTemp = Duration.between(in.toLocalDateTime().toLocalTime(), out.toLocalDateTime().toLocalTime()); // 異쒓렐 ~ �눜洹쇨퉴吏�
 					long Hour = dTemp.toHours();
-					long Min = dTemp.toMinutesPart();
-					long Sec = dTemp.toSecondsPart();
+					long Min = dTemp.toMinutes();
+					long Sec = dTemp.getSeconds();
 					holidaytime = String.format("%02d:%02d:%02d", Hour, Min, Sec);
 				} else {
 					holidaytime = " ";

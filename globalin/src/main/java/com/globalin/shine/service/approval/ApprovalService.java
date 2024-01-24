@@ -75,6 +75,10 @@ public class ApprovalService {
 		approvalMapper.updateApp(approval);
 	}
     
+    public void updateState(ApprovalVO approval) {
+		approvalMapper.updateState(approval);
+	}
+    
     public void updateReply(ApprovalVO approval) {
     	approvalMapper.updateReply(approval);
     }
@@ -94,4 +98,12 @@ public class ApprovalService {
     public ApprovalVO selectTemp(int no) {
     	return approvalMapper.selectTemp(no);
     }
+    
+    public ApprovalVO selectInbox(int no) {
+    	return approvalMapper.selectInbox(no);
+    }
+    
+    public List<ApprovalVO> getListPagingInYet(Criteria criteria) {
+		return approvalMapper.getListPagingInYet(criteria);
+	}
 }

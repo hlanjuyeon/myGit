@@ -14,4 +14,6 @@ public interface BoardDAO {
 	public int getTotal(Criteria criteria);
 	public List<FileVO> getFiles(Long bno);
 	public boolean removeReply(Long bno);
+	
+	public List<BoardVO> getListMain(Criteria criteria);
 }

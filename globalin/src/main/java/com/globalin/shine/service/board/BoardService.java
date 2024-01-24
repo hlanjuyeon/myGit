@@ -27,4 +27,7 @@ public interface BoardService {
 	public List<FileVO> getFiles(Long bno);
 	
 	public boolean removeReply(Long bno);
+	
+	//전체 게시글 가져오기
+	public List<BoardVO> getListMain(Criteria criteria);
 }

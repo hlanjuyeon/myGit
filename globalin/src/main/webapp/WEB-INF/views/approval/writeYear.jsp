@@ -37,6 +37,8 @@ height: 100%;
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
+	alert("[연차]는 숫자를 입력하세요. \n[반차]는 0.5를 입력하세요. \n\nex) 연차 : 1,2,3 ... / 반차 : 0.5");
+	
     document.querySelector("#send_list").addEventListener("click", () => {
     	document.querySelector("input[name=temp]").value = "상신";
     });
@@ -44,7 +46,7 @@ $(document).ready(function() {
     document.querySelector("#send_temp").addEventListener("click", () => {
     	document.querySelector("input[name=temp]").value = "임시저장";
     });
-    
+
 })
 </script>
 </head>
@@ -61,13 +63,13 @@ $(document).ready(function() {
                 <td colspan="3">
 					<select name="form" class="write_list" required>
 			            <option value="" >문서종류를 선택해주세요.</option>
-			            <option value="기안">기안</option>
-			            <option value="품의">품의</option>
+			            <option value="기안" disabled>기안</option>
+			            <option value="품의" disabled>품의</option>
 			            <option value="연차" selected>연차</option>
-			            <option value="보고">보고</option>
-			            <option value="지출결의">지출결의</option>
-			            <option value="출퇴근">출퇴근</option>
-			            <option value="기타">기타</option>
+			            <option value="보고" disabled>보고</option>
+			            <option value="지출결의" disabled>지출결의</option>
+			            <option value="출퇴근" disabled>출퇴근</option>
+			            <option value="기타" disabled>기타</option>
 			        </select>
 				</td>
             </tr>
@@ -176,7 +178,7 @@ $(document).ready(function() {
 				<td colspan="4">희망 연차일수</td>
 			</tr>
 			<tr>
-				<td colspan="4"><input type="text" name="yearUseDays" placeholder="희망하는 연차일수를 입력하세요." required></td>
+				<td colspan="4"><input type="number" step="0.1" name="yearUseDays" class="input_yearUseDays" placeholder="희망하는 연차일수를 입력하세요." required></td>
 			</tr>
 			<tr>
 				<td colspan="4">희망 연차일자</td>

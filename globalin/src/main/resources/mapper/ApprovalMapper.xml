@@ -249,11 +249,21 @@
 	        appDay3 = CASE WHEN #{appDay3} IS NULL THEN appDay3 ELSE #{appDay3} END,
 	        appState1 = CASE WHEN #{appState1} IS NULL THEN appState1 ELSE #{appState1} END,
 	        appState2 = CASE WHEN #{appState2} IS NULL THEN appState2 ELSE #{appState2} END,
-	        appState3 = CASE WHEN #{appState3} IS NULL THEN appState3 ELSE #{appState3} END,
-	        state = #{state}
+	        appState3 = CASE WHEN #{appState3} IS NULL THEN appState3 ELSE #{appState3} END
 	    WHERE no = #{no}
+    </update>
+	<update id="updateState">
+		UPDATE approval
+		SET
+			state =
+            CASE
+            	WHEN (appState1 = '반려' OR appState2 = '반려' OR appState3 = '반려') THEN '반려'
+                WHEN (appState1 = '결재' AND appState2 = '결재' AND appState3 = '결재') THEN '결재'
+				WHEN (appState1 = '결재' OR appState2 = '결재' OR appState3 = '결재') THEN '진행중'
+				ElSE state
+            END
+		Where no = #{no}
 	</update>
-	
 	<select id="selectTotal" resultType="dayOffVO">
 		select Total from dayOffinfo
 		where no = #{no}
@@ -268,4 +278,50 @@
 		select count(*) as countTemp from approval
 		where temp = '임시저장' and writerno = #{no}
 	</select>
+	
+	<select id="selectInbox" resultType="com.globalin.shine.domain.approval.ApprovalVO">
+    select 			
+		COUNT(*) as countInbox
+	from approval
+	where 
+		temp = '상신' 
+		and (appNo1 = #{loginNo} or appNo2 = #{loginNo} or appNo3 = #{loginNo})
+		and (
+		    (appNo1 = #{loginNo} and appState1 is null)
+		    or (appNo2 = #{loginNo} and appState2 is null)
+		    or (appNo3 = #{loginNo} and appState3 is null)
+			)
+	</select>
+	
+	<select id="getListPagingInYet" resultType="com.globalin.shine.domain.approval.ApprovalVO">
+    <![CDATA[
+		select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+				appNo1, appNo2, appNo3, refNo1, refNo2
+		from(
+		    select rownum as rn, no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+		    		appNo1, appNo2, appNo3, refNo1, refNo2 
+		    from (
+		        select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+		        		appNo1, appNo2, appNo3, refNo1, refNo2
+		        from approval
+		        WHERE 
+		        	temp = '상신' 
+					and (appNo1 = #{loginNo} or appNo2 = #{loginNo} or appNo3 = #{loginNo})
+					and (
+					    (appNo1 = #{loginNo} and appState1 is null)
+					    or (appNo2 = #{loginNo} and appState2 is null)
+					    or (appNo3 = #{loginNo} and appState3 is null)
+						)
+		        order by originNo desc, groupOrd asc
+		    )
+		    where rownum <= #{pageNum} * #{amount} 		    
+		]]>            
+		    <if test="keyword != null">
+		        <include refid="criteria"></include> 
+		    </if>
+		<![CDATA[
+		)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+    </select>
 </mapper>

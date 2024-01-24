@@ -240,11 +240,11 @@ a {
 }
 
 .right_btn{
-    width: 20%;
+    width: 30%;
     align-items: center;
     justify-content: center;
     display: flex;
-    margin-left: 1100px;
+    margin-left: 820px;
 }
 
 .write_table {

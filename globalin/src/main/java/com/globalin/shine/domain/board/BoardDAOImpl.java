@@ -54,4 +54,9 @@ public class BoardDAOImpl implements BoardDAO {
 	public boolean removeReply(Long bno) {
 		return boardMapper.deleteReply(bno) != 0;
 	}
+	
+	@Override
+	public List<BoardVO> getListMain(Criteria criteria) {
+		return boardMapper.getListMain(criteria);
+	}
 }

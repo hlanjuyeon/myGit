@@ -23,7 +23,7 @@
 	
 	<!-- 개인 사용내역 조회 -->
 	<select id="readList" resultType="com.globalin.shine.domain.approval.ApprovalVO">
-    select yearUseDays, yearUseDateStart, yearUseDateEnd, yearAmPm, yearReason
+    select yearUseDays, yearUseDateStart, yearUseDateEnd, yearAmPm, yearReason, writerNo
     from approval
     where writerNo = #{loginNo}
 	</select>

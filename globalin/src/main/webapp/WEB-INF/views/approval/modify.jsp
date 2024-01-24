@@ -84,6 +84,10 @@ $(document).ready(function() {
     	document.querySelector("input[name=temp]").value = "임시저장";
     });
     
+    document.querySelector("#delete_btn").addEventListener("click", () => {
+    	document.querySelector("#delete_form").action = "/approval/delete";
+    });
+    
 })
 </script>
 </head>
@@ -92,7 +96,7 @@ $(document).ready(function() {
     <div class="body_css">
     
 	<%@ include file="/WEB-INF/views/main/navigation.jsp" %>
-	<form action="/approval/modify" method="post" class="write_border">
+	<form action="/approval/modify" method="post" class="write_border delete_form">
        <div class="table_two">
         <table class="table_one">
             <tr>
@@ -245,15 +249,15 @@ $(document).ready(function() {
         </div>
         <div class="write_bottom  year_bottom">
 	        <div class="left_btn">
-	            <button type="button" class="my_btn" onclick="location.href='/approval/temp'">저장목록</button>
+	            <button type="button" class="my_btn" onclick="location.href='/approval/temp?loginNo=<c:out value="${employee.no}"/>'">저장목록</button>
 	            <button type="submit" class="write_btn" id="send_temp">임시저장</button>  
 	            <input type="hidden" name="temp">
 	        </div>
 	        <div class="right_btn">
 	            <button type="button" class="my_btn" onclick="location.href='/approval/list'">취소하기</button>
+	            <button type="submit" class="my_btn delete_btn" style="margin-left: 10px;">삭제하기</button>
 	            <button type="submit" class="write_btn" id="send_list">상신하기</button>
 	            <input type="hidden" name="no" value='<c:out value="${detail.docNo}"/>' >
-	            
 	        </div>
     	</div>
     </form>

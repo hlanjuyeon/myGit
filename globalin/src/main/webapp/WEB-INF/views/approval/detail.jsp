@@ -71,8 +71,8 @@ $(document).ready(function() {
 	
 	// AppNo1 승인 버튼 클릭 시 이벤트 처리 함수
 	function showSuccess1Alert() {
-	  var textSuccess = prompt("비밀번호를 입력하면, '결재' 처리가 완료됩니다.");
-	  if (appNo1dept === "${detail.appNo1dept}" && appNo1name === "${detail.appNo1name}") {
+	  if (appNo1dept === "${employee.deptName}" && appNo1name === "${employee.name}") {
+		  var textSuccess = prompt("비밀번호를 입력하면, '결재' 처리가 완료됩니다.");
 		  if(textSuccess === "${detail.appNo1pw}") {
 			  var currentDate = getCurrentDate();
 			  document.querySelector("input[name=appDay1]").value = currentDate;
@@ -89,13 +89,14 @@ $(document).ready(function() {
 		  }
 	  } else {
 		  alert("결재자 1(" + appNo1dept + " 소속 " + appNo1name +")에게만 결재권한이 있습니다.");
+		  document.querySelector(".updateApp").action = "/approval/updateAppFail";
 	  }
 	}
 	
 	// AppNo1 반려 버튼 클릭 시 이벤트 처리 함수
 	function showDanger1Alert() {
-	  var textDanger = prompt("비밀번호를 입력하면, '반려' 처리가 완료됩니다.");
-	  if (appNo1dept === "${detail.appNo1dept}" && appNo1name === "${detail.appNo1name}") {
+	  if (appNo1dept === "${employee.deptName}" && appNo1name === "${employee.name}") {
+		  var textDanger = prompt("비밀번호를 입력하면, '반려' 처리가 완료됩니다.");
 		  if(textDanger === "${detail.appNo1pw}") {
 			  var currentDate = getCurrentDate();
 			  document.querySelector("input[name=appDay1]").value = currentDate;
@@ -112,13 +113,15 @@ $(document).ready(function() {
 		  }
 	  } else {
 		  alert("결재자 1(" + appNo1dept + " 소속 " + appNo1name +")에게만 결재권한이 있습니다.");
+		  document.querySelector(".updateApp").action = "/approval/updateAppFail";
 	  }
 	}
 
 	// AppNo2 승인 버튼 클릭 시 이벤트 처리 함수
 	function showSuccess2Alert() {
-	  var textSuccess = prompt("비밀번호를 입력하면, '결재' 처리가 완료됩니다.");
-	  if (appNo2dept === "${detail.appNo2dept}" && appNo2name === "${detail.appNo2name}") {
+	  
+	  if (appNo2dept === "${employee.deptName}" && appNo2name === "${employee.name}") {
+		  var textSuccess = prompt("비밀번호를 입력하면, '결재' 처리가 완료됩니다.");
 		  if(textSuccess === "${detail.appNo2pw}") {
 			  var currentDate = getCurrentDate();
 			  document.querySelector("input[name=appDay2]").value = currentDate;
@@ -135,13 +138,15 @@ $(document).ready(function() {
 		  }
 	  } else {
 		  alert("결재자 2(" + appNo2dept + " 소속 " + appNo2name +")에게만 결재권한이 있습니다.");
+		  document.querySelector(".updateApp").action = "/approval/updateAppFail";
 	  }
 	}
 	
 	// AppNo2 반려 버튼 클릭 시 이벤트 처리 함수
 	function showDanger2Alert() {
-	  var textDanger = prompt("비밀번호를 입력하면, '반려' 처리가 완료됩니다.");
-	  if (appNo2dept === "${detail.appNo2dept}" && appNo2name === "${detail.appNo2name}") {
+	  
+	  if (appNo2dept === "${employee.deptName}" && appNo2name === "${employee.name}") {
+		  var textDanger = prompt("비밀번호를 입력하면, '반려' 처리가 완료됩니다.");
 		  if(textDanger === "${detail.appNo2pw}") {
 			  var currentDate = getCurrentDate();
 			  document.querySelector("input[name=appDay2]").value = currentDate;
@@ -158,14 +163,16 @@ $(document).ready(function() {
 		  }
 	  } else {
 		  alert("결재자 2(" + appNo2dept + " 소속 " + appNo2name +")에게만 결재권한이 있습니다.");
+		  document.querySelector(".updateApp").action = "/approval/updateAppFail";
 	  }
 	  
 	}	
 	
 	// AppNo3 승인 버튼 클릭 시 이벤트 처리 함수
 	function showSuccess3Alert() {
-	  var textSuccess = prompt("비밀번호를 입력하면, '결재' 처리가 완료됩니다.");
-	  if (appNo3dept === "${detail.appNo3dept}" && appNo3name === "${detail.appNo3name}") {
+	  
+	  if (appNo3dept === "${employee.deptName}" && appNo3name === "${employee.name}") {
+		  var textSuccess = prompt("비밀번호를 입력하면, '결재' 처리가 완료됩니다.");
 		  if(textSuccess === "${detail.appNo3pw}") {
 			  var currentDate = getCurrentDate();
 			  document.querySelector("input[name=appDay3]").value = currentDate;
@@ -182,13 +189,15 @@ $(document).ready(function() {
 		  }
 	  } else {
 		  alert("결재자 3(" + appNo3dept + " 소속 " + appNo3name +")에게만 결재권한이 있습니다.");
+		  document.querySelector(".updateApp").action = "/approval/updateAppFail";
 	  }
 	}
 	
 	// AppNo3 반려 버튼 클릭 시 이벤트 처리 함수
 	function showDanger3Alert() {
-	  var textDanger = prompt("비밀번호를 입력하면, '반려' 처리가 완료됩니다.");
-	  if (appNo3dept === "${detail.appNo3dept}" && appNo3name === "${detail.appNo3name}") {
+	  
+	  if (appNo3dept === "${employee.deptName}" && appNo3name === "${employee.name}") {
+		  var textDanger = prompt("비밀번호를 입력하면, '반려' 처리가 완료됩니다.");
 		  if(textDanger === "${detail.appNo3pw}") {
 			  var currentDate = getCurrentDate();
 			  document.querySelector("input[name=appDay3]").value = currentDate;
@@ -205,6 +214,7 @@ $(document).ready(function() {
 		  }
 	  } else {
 		  alert("결재자 3(" + appNo3dept + " 소속 " + appNo3name +")에게만 결재권한이 있습니다.");
+		  document.querySelector(".updateApp").action = "/approval/updateAppFail";
 	  }
 	}
 	
@@ -253,22 +263,7 @@ $(document).ready(function() {
 		buttonDanger3.style.display = "none";
 		document.querySelector(".reject3_display").style.display = "block";
 	}
-	
-	if(appState1 === "결재"){
-		if(appState2 === "결재") {
-			if(appState3 === "결재") {
-				document.querySelector("input[name=state]").value = "결재";
-			}
-		}
-	} else if(appState1 === "반려") {
-		document.querySelector("input[name=state]").value = "반려";
-	} else if(appState2 === "반려") {
-		document.querySelector("input[name=state]").value = "반려";
-	} else if(appState3 === "반려") {
-		document.querySelector("input[name=state]").value = "반려";
-	} else {
-		document.querySelector("input[name=state]").value = "진행중";
-	}
+		
 });
 
 $(function() {

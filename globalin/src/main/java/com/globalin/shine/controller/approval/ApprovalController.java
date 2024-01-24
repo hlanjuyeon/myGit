@@ -47,6 +47,20 @@ public class ApprovalController {
         model.addAttribute("pageMaker", pageMake);
     }
     
+    @GetMapping("/listInYet")
+    public String ApprovalListInYetGET(Model model, Criteria criteria, ApprovalVO approval, HttpServletRequest request) {
+    	log.info("/게시판 목록 페이지(미결재 수신함)");
+    	HttpSession session = request.getSession();
+    	model.addAttribute("no", employeeService.getVOById((String) session.getAttribute("id")).getNo());
+    	approvalService.updateOriginNo(approval);
+    	model.addAttribute("list", approvalService.getListPagingInYet(criteria));
+    	int total = approvalService.getTotal();
+    	PageMakerDTO pageMake = new PageMakerDTO(criteria, total);
+    	model.addAttribute("pageMaker", pageMake);
+
+    	return "/approval/listIn";
+    }
+    
     @GetMapping("/listOut")
     public void ApprovalListOutGET(Model model, Criteria criteria, ApprovalVO approval, HttpServletRequest request) {
         log.info("/게시판 목록 페이지(수신함)");
@@ -60,8 +74,11 @@ public class ApprovalController {
     }
     
 	@GetMapping("/detail")
-	public void DetailGet(int no, Model model, Criteria criteria) {
+	public void DetailGet(int no, Model model, Criteria criteria, HttpServletRequest request) {
 		log.info("/게시글 상세내용 조회하기");
+		HttpSession session = request.getSession();
+		model.addAttribute("name", employeeService.getVOById((String) session.getAttribute("id")).getName());
+		model.addAttribute("deptName", employeeService.getVOById((String) session.getAttribute("id")).getDeptName());
 		model.addAttribute("detail", approvalService.getDetail(no));
 		model.addAttribute("criteria", criteria);
 		log.info("ApprovalVO : " + model);
@@ -103,6 +120,7 @@ public class ApprovalController {
 	public void ModifyGet(int no, Model model) {
 		log.info("/임시저장글 상세내용 조회하기");
 		model.addAttribute("detail", approvalService.getDetail(no));
+		log.info("ApprovalVO : " + model);
 		model.addAttribute("emp", approvalService.getDeptList());
 		model.addAttribute("user", approvalService.getUserList());
 	}
@@ -221,6 +239,7 @@ public class ApprovalController {
 		HttpSession session = request.getSession();
 	    model.addAttribute("no", employeeService.getVOById((String) session.getAttribute("id")).getNo());
 		approvalService.updateApp(approval);
+		approvalService.updateState(approval);
 		log.info("ApprovalVO : " + approval);
 		
 		try {
@@ -233,7 +252,7 @@ public class ApprovalController {
 	
 	@PostMapping("/updateAppFail")
 	public String updateAppFailPost(int no, Model model, HttpServletRequest request) {
-		log.info("/게시글 삭제하기");
+		log.info("/결재권자 비밀번호 입력 실패");
 		HttpSession session = request.getSession();
 	    model.addAttribute("no", employeeService.getVOById((String) session.getAttribute("id")).getNo());
 		return "redirect:/approval/listIn?loginNo=" + model.asMap().get("no");

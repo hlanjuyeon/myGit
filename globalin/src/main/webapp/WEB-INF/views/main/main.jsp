@@ -44,7 +44,6 @@ body {
 
 .box h2 {
 	position: relative;
-	top: 10px;
 	left: 60px;
 }
 
@@ -58,7 +57,7 @@ body {
 }
 
 .box canvas {
-	top: 0;
+	top: -12px;
 	width: 90%;
 }
 
@@ -73,7 +72,7 @@ body {
 .commute {
 	position: relative;
 	left: 25%;
-	bottom: 25%;
+	bottom: 40%;
 	width: 45%;
 	height: 20%;
 }
@@ -110,7 +109,7 @@ body {
 .vacation {
 	position: relative;
 	left: 70%;
-	bottom: 90%;
+	bottom: 105%;
 	font-size: 20px;
 }
 
@@ -119,12 +118,12 @@ body {
 	width: 100%;
 	height: 250px;
 	margin-left: 20px;
-	margin-bottom: 50px;
+	margin-bottom: 30px;
 }
 
 .main2 {
 	top: 40%;
-	height: 200px;
+	    height: 270px;
 }
 
 .main3 {
@@ -165,6 +164,56 @@ body {
 {
     display: none !important;
 }
+
+@media(max-width: 918px){
+				body {transform: scale(1); overflow-x: hidden;}
+				.deptName {display: none;}
+				.name {display: none;}
+				.regDate {display: none;}
+				.updateDate {display: none;}
+				.big-width {display: none;}
+				.small-width {display: block;}
+				select{
+					width:100%;
+				}
+				
+				input[name='keyword']{
+					width:100%;
+				}
+				
+				.search{
+					width:100%;
+				}
+			}
+			
+.table-wrapper {
+    overflow: auto;
+    max-width: 100%;
+    background: #fff;
+    border-radius: 0.35em;
+    box-shadow: 0 0.1em 0.25em rgba(0, 0, 0, 0.05);
+}
+
+.table-wrapper table {
+    margin: 0 0 2em 0;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-wrapper table td, 
+.table-wrapper table th {
+    padding: 0.75em;
+    text-align: center;
+}
+
+.table-wrapper table th {
+    color: #3D9970;
+    border-bottom: 2px solid #3D9970;
+}
+
+.table-wrapper table tr:nth-child(2n + 1) {
+    background-color: #f7f7f7;
+}
 </style>
 </head>
 <body>
@@ -173,7 +222,7 @@ body {
     
 	<%@ include file="/WEB-INF/views/main/navigation.jsp" %>
 	<div class="body_right">
-		<div class="MainContainer main1" style="height:280px">
+		<div class="MainContainer main1" style="height:240px">
 			<a href="/commute/dayWork" class="mainLink"><b>근태관리</b></a>
 			<div class="box">
  				<h2 class="time">&nbsp;&nbsp;&nbsp;&nbsp;  ${sumtimeH}:${sumtimeM}</h2>
@@ -210,48 +259,68 @@ body {
 					</div>
 				</div>
 			</div>
-			<div class="wrapper vacation" onclick="clickDayoff()">
+			<a href='/dayOff/read?no=<c:out value="${employee.no}"/>'>
+			<div class="wrapper vacation">
 				<br>
 				<b>총 연차 : &nbsp;&nbsp;&nbsp;&nbsp; <span><c:out value="${total.total}"/></span> <br>
 				<br>
 				<br> 잔여 연차 : &nbsp;&nbsp;<span><c:out value="${remind.remind}"/></span></b>
 			</div>
+			</a>
 		</div>
 		<div class="MainContainer main2">
-			<a href="notice" class="mainLink"><b>공지게시판</b></a>
-			<table border="1" cellpadding="0" cellspacing="0" width="800" class="notice">
+			<div style="margin-bottom: 10px; margin-top: 10px;"><a href="notice" class="mainLink"><b>공지게시판</b></a></div>
+			<div class="table-wrapper">
+			<table>
 				<thead>
-				<tr>
-					<th class="bno" width="50">번호</th>
-					<th class="title" width="200">제목</th>
-					<th class="writer" width="100">작성자</th>
-					<th class="regDate" width="150">작성일자</th>
-				</tr>
+					<tr class="tHead">
+						<th class="bno">번호</th>
+						<th class="title">제목</th>
+						<th class="deptName">부서</th>
+						<th class="name">작성자</th>
+						<th class="regDate">작성일</th>
+						<th class="updateDate">수정일</th>
+					</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td class="bno"></td>
-					<td class="title"></td>
-					<td class="writer"></td>
-					<td class="regDate"></td>
+					<c:forEach var="board" items="${boardList}">
+						<tr class="tBody">
+							<td class="bno">${board.bno}</td>
+							<td class="title"><a href="/board/read${pageDTO.criteria.params}&bno=${board.bno}">${board.title}</a></td>
+							<td class="deptName">${board.deptName}</td>
+							<td class="name">${board.name}</td>
+							<td class="regDate">${board.regDate}</td>
+							<td class="updateDate">${board.updateDate}</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
+			</div>
 		</div>
 		<div class="MainContainer main3">
-			<a href="/dayOff/read?no=" class="mainLink"><b>전자결재</b></a>
-			<div class="wrapper approval" onclick="clickHandler()">
+			<b class="mainLink">전자결재</b>
+			<a href='/approval/listInYet?loginNo=<c:out value="${employee.no}"/>'>
+			<div class="wrapper approval">
 				<br>
-				<b>미결재 <span>0</span>건
+				<b>미결재 <span><c:out value="${inbox.countInbox}"/></span>건
 				</b>
 			</div>
-			<div class="wrapper unwritten" onclick="clickEvent()">
+			</a>
+			<a href='/approval/temp?loginNo=<c:out value="${employee.no}"/>'>
+			<div class="wrapper unwritten">
 				<br>
 				<b>작성문서 <span><c:out value="${temp.countTemp}"/></span>건
 				</b>
 			</div>
+			</a>
 		</div>
 	</div>
 	</div>
+	<form name="pageForm" action="/board/list">
+		<input type="hidden" name="pageNum" value="${pageDTO.criteria.pageNum}">
+		<input type="hidden" name="type" value="${pageDTO.criteria.type}">
+		<input type="hidden" name="keyword" value="${pageDTO.criteria.keyword}">
+	</form>
 </div>
 	<script type="text/javascript">
 		// 근무시간 합계 그래프
@@ -278,18 +347,6 @@ body {
 		 
 		}
 
-		// 페이지 이동 스크립트
-		function clickHandler() {
-			window.location.href = "approval";
-		}
-
-		function clickEvent() {
-			window.location.href = "approval";
-		}
-
-		function clickDayoff() {
-			window.location.href = "/commute/dayOff";
-		}
 	</script>
 	<script src="/resources/main/main.js" type="text/javascript"></script>
 </body>

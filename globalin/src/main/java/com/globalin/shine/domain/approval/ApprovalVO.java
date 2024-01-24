@@ -54,6 +54,7 @@ public class ApprovalVO{
 	private int writerReplyNo;
 	private String writerReply;
 	private int countTemp;
+	private int countInbox ;
 	
     /*
      * 계층형 게시판을 위한 추가 필드

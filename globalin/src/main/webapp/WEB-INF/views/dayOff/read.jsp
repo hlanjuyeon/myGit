@@ -10,9 +10,7 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
 
 <style type="text/css">
-
-
-	body {
+body {
 	width: 1800px;
 	height: 900px;
 }
@@ -23,7 +21,7 @@
 .header_css {
     margin: 20px;
     display: flex;
-        width: 1850px;
+    width: 1850px;
 }
 .body_right {
     min-width: 90%;
@@ -35,9 +33,7 @@ height: 100%;
 	height: 800px;
 	margin-left: 20px;
 	margin-bottom: 50px;
-	overflow: auto;
 }
-
 
 .name {
 	font-size: 25px;
@@ -61,6 +57,12 @@ height: 100%;
 	margin: 30px;
 }
 
+.scrollable-body {
+    max-height: 100px;
+    overflow-y: auto;
+    display: block;
+}
+
 td {
 	color: black;
 	text-align: center;
@@ -72,7 +74,7 @@ th {
 }
 
 .title{
-font-size: 25px;
+	font-size: 25px;
 	margin: 20px;
 	background-color: #FDC500;
 	width: 220px;
@@ -126,31 +128,27 @@ font-size: 25px;
 		<div class="title">
 			<b>연차사용정보</b>
 		</div>
-
-		<table class="usedayOffInfo" border="1">
-			<thead>
-				<tr>
-					<th width="300">연차종류(반차/연차)</th>
-					<th width="600">연차사용기간</th>
-					<th width="500">연차사유</th>
-				</tr>
-			</thead>
-			
-			<tbody>
-			<c:forEach var="dayOffList" items="${dayOffList}"> 
-					<tr>
-						<td><c:out value="${dayOffLㅋist.yearUseDays}" /> 일 (연차/반차)</td>
-						<td><c:out value="${dayOffLㅋist.yearUseDateStart}" /> ~ <c:out value="${dayOffLㅋist.yearUseDateEnd}" /> </td>						
-						<td><c:out value="${dayOffLㅋist.yearReason}" /></td> 
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
 		
-		<!-- 페이징 처리 -->
-
-
-		<!-- 연차 신청하기버튼 -->
+		<table class="usedayOffInfo" border="1">
+		    <thead style="position: sticky; top: 0;">
+		        <tr>
+		            <th width="300">연차종류(반차/연차)</th>
+		            <th width="600">연차사용기간</th>
+		            <th width="500">연차사유</th>
+		        </tr>
+		    </thead>
+		    <tbody class="scrollable-body">
+		        <c:forEach var="dayOffList" items="${dayOffList}">
+		            <tr>
+		                <td><c:out value="${dayOffList.yearUseDays}" /> 일 
+		                    <c:out value="${dayOffList.yearUseDays == 0.5 ? '(반차)' : '(연차)'}" escapeXml="false" />
+		                </td>
+		                <td><c:out value="${dayOffList.yearUseDateStart}" /> ~ <c:out value="${dayOffList.yearUseDateEnd}" /> </td>
+		                <td><c:out value="${dayOffList.yearReason}" /></td>
+		            </tr>
+		        </c:forEach>
+		    </tbody>
+		</table>
 		<br>
 		<input type="button" class="read" value="연차 신청하기" onclick="location.href='/approval/writeYear?loginNo=<c:out value="${employee.no}"/>'">
 	</div> 
