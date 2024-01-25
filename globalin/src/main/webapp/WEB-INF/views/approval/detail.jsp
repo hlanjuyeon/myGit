@@ -37,7 +37,9 @@
 height: 100%;
 }
 
-
+.modal-dialog {
+    max-width: 1200px !important;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function() {	
@@ -53,14 +55,6 @@ $(document).ready(function() {
 	var buttonDanger2 = document.querySelector(".appNo2btnD");
 	var buttonSuccess3 = document.querySelector(".appNo3btnS");
 	var buttonDanger3 = document.querySelector(".appNo3btnD");
-	
-	// 버튼 클릭 이벤트에 showAlert 함수 연결
-	buttonSuccess1.addEventListener("click", showSuccess1Alert);
-	buttonSuccess2.addEventListener("click", showSuccess2Alert);
-	buttonSuccess3.addEventListener("click", showSuccess3Alert);
-	buttonDanger1.addEventListener("click", showDanger1Alert);
-	buttonDanger2.addEventListener("click", showDanger2Alert);
-	buttonDanger3.addEventListener("click", showDanger3Alert);
 	
 	var appNo1dept = $(".appNo1dept").text();
 	var appNo1name = $(".appNo1name").text();
@@ -242,6 +236,10 @@ $(document).ready(function() {
 		buttonSuccess1.style.display = "none";
 		buttonDanger1.style.display = "none";
 		document.querySelector(".reject1_display").style.display = "block";
+		buttonSuccess2.addEventListener("click", disableSubmitButton);
+		buttonSuccess3.addEventListener("click", disableSubmitButton);
+		buttonDanger2.addEventListener("click", disableSubmitButton);
+		buttonDanger3.addEventListener("click", disableSubmitButton);
 	}
 	
 	if(appState2 === "결재") {
@@ -252,6 +250,10 @@ $(document).ready(function() {
 		buttonSuccess2.style.display = "none";
 		buttonDanger2.style.display = "none";
 		document.querySelector(".reject2_display").style.display = "block";
+		buttonSuccess1.addEventListener("click", disableSubmitButton);
+		buttonSuccess3.addEventListener("click", disableSubmitButton);
+		buttonDanger1.addEventListener("click", disableSubmitButton);
+		buttonDanger3.addEventListener("click", disableSubmitButton);		
 	}
 	
 	if(appState3 === "결재") {
@@ -262,8 +264,45 @@ $(document).ready(function() {
 		buttonSuccess3.style.display = "none";
 		buttonDanger3.style.display = "none";
 		document.querySelector(".reject3_display").style.display = "block";
+		buttonSuccess1.addEventListener("click", disableSubmitButton);
+		buttonSuccess2.addEventListener("click", disableSubmitButton);
+		buttonDanger1.addEventListener("click", disableSubmitButton);
+		buttonDanger2.addEventListener("click", disableSubmitButton);
 	}
-		
+	
+	const BtnSuccess = document.querySelector(".btn-success");
+	const BtnDanger = document.querySelector(".btn-danger");
+	
+	function disableSubmitButton(event) {
+		alert("이미 반려된 상신문서입니다. 더 이상 결재를 진행할 수 없습니다.");
+		event.preventDefault(); // 기본 이벤트 동작을 막습니다.
+	}
+	
+	// 버튼 클릭 이벤트에 showAlert 함수 연결
+	buttonSuccess1.addEventListener("click", showSuccess1Alert);
+	buttonSuccess2.addEventListener("click", showSuccess2Alert);
+	buttonSuccess3.addEventListener("click", showSuccess3Alert);
+	buttonDanger1.addEventListener("click", showDanger1Alert);
+	buttonDanger2.addEventListener("click", showDanger2Alert);
+	buttonDanger3.addEventListener("click", showDanger3Alert);
+	
+	if(appState1 === "반려") {
+		buttonSuccess2.removeEventListener("click", showSuccess2Alert);
+		buttonSuccess3.removeEventListener("click", showSuccess3Alert);
+		buttonDanger2.removeEventListener("click", showDanger2Alert);
+		buttonDanger3.removeEventListener("click", showDanger3Alert);
+	} else if(appState2 === "반려") {
+		buttonSuccess1.removeEventListener("click", showSuccess1Alert);
+		buttonSuccess3.removeEventListener("click", showSuccess3Alert);
+		buttonDanger1.removeEventListener("click", showDanger1Alert);
+		buttonDanger3.removeEventListener("click", showDanger3Alert);
+	} else if(appState3 === "반려") {
+		buttonSuccess1.removeEventListener("click", showSuccess1Alert);
+		buttonSuccess2.removeEventListener("click", showSuccess2Alert);
+		buttonDanger1.removeEventListener("click", showDanger1Alert);
+		buttonDanger2.removeEventListener("click", showDanger2Alert);
+	}
+	
 });
 
 $(function() {

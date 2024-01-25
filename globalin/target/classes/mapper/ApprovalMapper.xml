@@ -103,13 +103,19 @@
     <select id="getListPagingOut" resultType="com.globalin.shine.domain.approval.ApprovalVO">
     <![CDATA[
 		select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
-				appNo1, appNo2, appNo3, refNo1, refNo2
+				appNo1, appNo2, appNo3, refNo1, refNo2, GREATEST(appDay1, appDay2, appDay3) AS appDay,
+				appState1, appState2, appState3,
+				CASE
+					WHEN (appState1 = '반려') THEN appDay1
+					WHEN (appState2 = '반려') THEN appDay2
+					WHEN (appState3 = '반려') THEN appDay3  
+				END AS rejectDay
 		from(
 		    select rownum as rn, no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
-		    		appNo1, appNo2, appNo3, refNo1, refNo2    
+		    		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3
 		    from (
 		        select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
-		        		appNo1, appNo2, appNo3, refNo1, refNo2
+		        		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3
 		        from approval
 		        WHERE temp = '상신' 
 		        AND writerNo = #{loginNo}
@@ -129,13 +135,19 @@
     <select id="getListPagingIn" resultType="com.globalin.shine.domain.approval.ApprovalVO">
     <![CDATA[
 		select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
-				appNo1, appNo2, appNo3, refNo1, refNo2
+				appNo1, appNo2, appNo3, refNo1, refNo2, GREATEST(appDay1, appDay2, appDay3) AS appDay,
+				appState1, appState2, appState3,
+				CASE
+					WHEN (appState1 = '반려') THEN appDay1
+					WHEN (appState2 = '반려') THEN appDay2
+					WHEN (appState3 = '반려') THEN appDay3
+				END AS rejectDay
 		from(
 		    select rownum as rn, no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
-		    		appNo1, appNo2, appNo3, refNo1, refNo2 
+		    		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3
 		    from (
 		        select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
-		        		appNo1, appNo2, appNo3, refNo1, refNo2
+		        		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3
 		        from approval
 		        WHERE temp = '상신' 
 				AND (appNo1 = #{loginNo} or appNo2 = #{loginNo} or appNo3 = #{loginNo} or refNo1 = #{loginNo} or refNo2 = #{loginNo})

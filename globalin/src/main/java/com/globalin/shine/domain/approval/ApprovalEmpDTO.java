@@ -59,7 +59,7 @@ public class ApprovalEmpDTO {
 	private String appNo2pw;
 	private String appNo3pw;
 	private String writerReply;
-	
+	private String appDay;
     /*
      * 계층형 게시판을 위한 추가 필드
      * originNo, groupOrd, groupLayer 

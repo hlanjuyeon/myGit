@@ -48,13 +48,14 @@ height: 100%;
 	width: 750px;
 	height: 50px;
 	margin: 30px;
+	border-spacing: 0px;
 }
 
 .usedayOffInfo {
 	font-size: 20px;
 	width: 1000px;
 	height: 50px;
-	margin: 30px;
+	border-spacing: 0px;
 }
 
 .scrollable-body {
@@ -128,7 +129,7 @@ th {
 		<div class="title">
 			<b>연차사용정보</b>
 		</div>
-		
+		<div style="overflow: auto; height: 290px; width: 1016.5px;" >
 		<table class="usedayOffInfo" border="1">
 		    <thead style="position: sticky; top: 0;">
 		        <tr>
@@ -137,7 +138,7 @@ th {
 		            <th width="500">연차사유</th>
 		        </tr>
 		    </thead>
-		    <tbody class="scrollable-body">
+		    <tbody>
 		        <c:forEach var="dayOffList" items="${dayOffList}">
 		            <tr>
 		                <td><c:out value="${dayOffList.yearUseDays}" /> 일 
@@ -149,6 +150,7 @@ th {
 		        </c:forEach>
 		    </tbody>
 		</table>
+		</div>
 		<br>
 		<input type="button" class="read" value="연차 신청하기" onclick="location.href='/approval/writeYear?loginNo=<c:out value="${employee.no}"/>'">
 	</div> 

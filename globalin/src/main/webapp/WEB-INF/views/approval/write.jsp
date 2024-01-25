@@ -38,7 +38,9 @@
     min-width: 90%;
 height: 100%;
 }
-
+.note-editor.note-frame .note-editing-area {
+    height: 450px !important;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function() {

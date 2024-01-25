@@ -120,8 +120,10 @@ body {
 						<c:out value="${item.form == '첨언' ? item.writerReply : item.writer}" escapeXml="false" />
 					</p>
 		            <p class="write_date"><c:out value="${item.writeDay}"/></p>
-		            <p class="payment_date"><c:out value="${item.appDay1}"/></p>
-		            <p class="progress"><c:out value="${item.state}"/></p>
+		            <p class="payment_date">
+		            	<c:out value="${item.appState1 == '반려' || item.appState2 == '반려' || item.appState3 == '반려'? item.rejectDay : item.appDay}"/>
+		            </p>
+ 		            <p class="progress"><c:out value="${item.state}"/></p>
 	            </div>
             </a>
             </div>

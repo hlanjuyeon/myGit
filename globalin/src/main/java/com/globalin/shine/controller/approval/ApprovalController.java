@@ -120,9 +120,9 @@ public class ApprovalController {
 	public void ModifyGet(int no, Model model) {
 		log.info("/임시저장글 상세내용 조회하기");
 		model.addAttribute("detail", approvalService.getDetail(no));
-		log.info("ApprovalVO : " + model);
 		model.addAttribute("emp", approvalService.getDeptList());
 		model.addAttribute("user", approvalService.getUserList());
+		log.info("ApprovalVO : " + model);
 	}
 	
 	@PostMapping("/modify")
@@ -219,8 +219,9 @@ public class ApprovalController {
 	
 	@GetMapping("/modifyYear")
 	public void ModifyYearGet(int no, Model model) {
-		log.info("/첨언 ver : 임시저장글 상세내용 조회하기");
+		log.info("/연차 ver : 임시저장글 상세내용 조회하기");
 		model.addAttribute("detail", approvalService.getDetail(no));
+		log.info("ApprovalVO : " + model);
 		model.addAttribute("emp", approvalService.getDeptList());
 		model.addAttribute("user", approvalService.getUserList());
 	}
