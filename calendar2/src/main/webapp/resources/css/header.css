@@ -1,0 +1,11 @@
+.logo {
+	width: 145px;
+	height: 80px;
+}
+
+.header-right {
+	display:inline-flex;
+	float: right;
+	font-weight: bold;
+	font-size: 30px;
+}

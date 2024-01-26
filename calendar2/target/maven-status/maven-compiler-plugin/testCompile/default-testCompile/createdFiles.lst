@@ -1,0 +1,10 @@
+com\example\board\service\ReplyServiceTests.class
+com\example\board\mapper\ReplyMapperTests.class
+com\example\board\persistence\JdbcTests.class
+com\example\board\mapper\BoardMapperTests.class
+com\example\board\persistence\DataSourceTests.class
+com\example\board\controller\BoardControllerTests.class
+com\example\board\mapper\TimeMapperTests.class
+com\example\board\domain\dao\BoardDAOTests.class
+com\example\board\domain\dao\ReplyDAOTests.class
+com\example\board\service\BoardServiceTests.class

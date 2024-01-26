@@ -1,0 +1,79 @@
+@charset "UTF-8";
+/* 게시판 테이블 CSS */
+#main .table-wrapper {
+    margin-top: 1em;
+    overflow: auto;
+    max-width: 100%;
+    background: #fff;
+    border-radius: 0.35em;
+    box-shadow: 0 0.1em 0.25em rgba(0, 0, 0, 0.05);
+}
+
+#main .table-wrapper table {
+    margin: 0 0 2em 0;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#main .table-wrapper table td, 
+#main .table-wrapper table th {
+    padding: 0.75em;
+    text-align: center;
+}
+
+#main .table-wrapper table th {
+    color: #3D9970;
+    border-bottom: 2px solid #3D9970;
+}
+
+#main .table-wrapper table tr:nth-child(2n + 1) {
+    background-color: #f7f7f7;
+}
+
+/* 게시판 헤더 CSS */
+#main .inner .major h1 {
+    font-size: 3em;
+    color: #3D9970;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+
+#main .inner .major p {
+    font-size: 1.2em;
+    color: #3D9970;
+}
+
+/* 검색 폼 CSS */
+form[name="searchForm"] .fields .field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+form[name="searchForm"] .fields .field select {
+    padding: 0.5em;
+    font-size: 0.9em;
+}
+
+form[name="searchForm"] .fields .field input[type="text"] {
+    padding: 0.5em;
+    font-size: 0.9em;
+    flex-grow: 1;
+}
+
+/* 페이지네이션 CSS */
+.big-width, .small-width {
+    margin-top: 1em;
+}
+
+.changePage {
+    color: #3D9970;
+    text-decoration: none;
+    margin: 0 0.5em;
+}
+
+.changePage:hover {
+    color: #3D9970;
+    text-decoration: underline;
+}
