@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.globalin.shine.mapper.approval.ApprovalMapper">
+	<!-- 검색 조건문 -->
+    <sql id="criteria">
+        <trim prefix="AND (" suffix=")" prefixOverrides="OR">
+            <foreach collection="typeArr" item="type">
+                <trim prefix="OR">
+                    <choose>
+                        <when test="type == 'T'.toString()">
+                            title like '%'||#{keyword}||'%' 
+                        </when>
+                        <when test="type == 'C'.toString()">
+                            content like '%'||#{keyword}||'%' 
+                        </when>
+                        <when test="type == 'W'.toString()">
+                            writer like '%'||#{keyword}||'%' 
+                        </when>
+                        <when test="type == 'P'.toString()">
+                            progress like '%'||#{keyword}||'%' 
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>
+        </trim>
+    </sql>
+	<select id="getDetail" resultType="com.globalin.shine.domain.approval.ApprovalEmpDTO">
+		SELECT  
+		    a.no as docNo, a.form, a.title, a.startDept, a.endDept, a.content, a.writer, a.state,
+		    emp1.Name AS appNo1name, emp1.DeptName AS appNo1dept, emp1.id AS appNo1id, emp1.pw AS appNo1pw, 
+		    emp2.Name AS appNo2name, emp2.DeptName AS appNo2dept, emp2.id AS appNo2id, emp2.pw AS appNo2pw, 
+		    emp3.Name AS appNo3name, emp3.DeptName AS appNo3dept, emp3.id AS appNo3id, emp3.pw AS appNo3pw, 
+		    emp4.Name AS refNo1name, emp4.DeptName AS refNo1dept,
+		    emp5.Name AS refNo2name, emp5.DeptName AS refNo2dept,
+		    a.appDay1, a.appDay2, a.appDay3, a.appState1, a.appState2, a.appState3,
+		    a.appNo1, a.appNo2, a.appNo3, a.refNo1, a.refNo2,
+		    a.titleReply, a.contentReply, a.replyDept, a.writerReply,
+		    a.yearUseDays, a.yearUseDateStart, a.yearUseDateEnd, a.yearAmPm, a.yearReason
+		FROM APPROVAL a
+		JOIN employee emp1 ON a.appNo1 = emp1.no
+		LEFT JOIN employee emp2 ON a.appNo2 = emp2.no
+		LEFT JOIN employee emp3 ON a.appNo3 = emp3.no
+		LEFT JOIN employee emp4 ON a.refNo1 = emp4.no
+		LEFT JOIN employee emp5 ON a.refNo2 = emp5.no
+		WHERE a.no = #{no}
+	</select>
+	<!-- 문서작성 페이지에서 데이터 삽입 -->
+	<insert id="insert">
+        INSERT INTO approval 
+        	(form, title, endDept, writer, appNo1, appNo2, appNo3, refNo1, refNo2, content, writeDay, updateDay, temp, writerNo,
+        	startDept, state)
+        VALUES (#{form}, #{title}, #{endDept}, #{writer}, #{appNo1}, #{appNo2}, #{appNo3}, #{refNo1}, #{refNo2},
+        		#{content}, to_char(sysdate, 'yyyy-mm-dd hh24:mi:ss'), to_char(sysdate, 'yyyy-mm-dd hh24:mi:ss'), #{temp}, #{writerNo},
+        		#{startDept}, '대기중')
+    </insert>
+    <!-- 임시저장글 수정 -->
+    <update id="update">
+	    update approval
+	    <set>
+	        <if test="form != null">
+	            form = #{form},
+	        </if>
+	        <if test="endDept != null">
+	            endDept = #{endDept},
+	        </if>
+	        <if test="title != null">
+	            title = #{title},
+	        </if>
+	        <if test="content != null">
+	            content = #{content},
+	        </if>
+	        <if test="appNo1 != null">
+	            appNo1 = #{appNo1},
+	        </if>
+	        <if test="appNo2 != null">
+	            appNo2 = #{appNo2},
+	        </if>
+	        <if test="appNo3 != null">
+	            appNo3 = #{appNo3},
+	        </if>
+	        <if test="refNo1 != null">
+	            refNo1 = #{refNo1},
+	        </if>
+	        <if test="refNo2 != null">
+	            refNo2  = #{refNo2 },
+	        </if>
+	        <if test="updateDay != null">
+	            updateDay = to_char(sysdate, 'yyyy-mm-dd hh24:mi:ss'),
+	        </if>
+	        <if test="temp != null">
+	            temp = #{temp},
+	        </if>
+	    </set>
+	    <where>
+	        no = #{no}
+	    </where>
+	</update>
+	<delete id="delete">
+		delete from approval
+		where no = #{no}
+	</delete>
+    <!-- out 게시물 목록(페이징) : 발신함 -->
+    <select id="getListPagingOut" resultType="com.globalin.shine.domain.approval.ApprovalVO">
+    <![CDATA[
+		select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+				appNo1, appNo2, appNo3, refNo1, refNo2, GREATEST(appDay1, appDay2, appDay3) AS appDay,
+				appState1, appState2, appState3,
+				CASE
+					WHEN (appState1 = '반려') THEN appDay1
+					WHEN (appState2 = '반려') THEN appDay2
+					WHEN (appState3 = '반려') THEN appDay3  
+				END AS rejectDay
+		from(
+		    select rownum as rn, no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+		    		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3
+		    from (
+		        select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+		        		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3
+		        from approval
+		        WHERE temp = '상신' 
+		        AND writerNo = #{loginNo}
+		        order by originNo desc, groupOrd asc
+		    )
+		    where rownum <= #{pageNum} * #{amount} 		    
+		]]>            
+		    <if test="keyword != null">
+		        <include refid="criteria"></include> 
+		    </if>
+		<![CDATA[
+		)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+    </select>
+    <!-- in 게시물 목록(페이징) : 수신함 -->
+    <select id="getListPagingIn" resultType="com.globalin.shine.domain.approval.ApprovalVO">
+    <![CDATA[
+		select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+				appNo1, appNo2, appNo3, refNo1, refNo2, GREATEST(appDay1, appDay2, appDay3) AS appDay,
+				appState1, appState2, appState3,
+				CASE
+					WHEN (appState1 = '반려') THEN appDay1
+					WHEN (appState2 = '반려') THEN appDay2
+					WHEN (appState3 = '반려') THEN appDay3
+				END AS rejectDay
+		from(
+		    select rownum as rn, no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+		    		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3
+		    from (
+		        select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+		        		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3
+		        from approval
+		        WHERE temp = '상신' 
+				AND (appNo1 = #{loginNo} or appNo2 = #{loginNo} or appNo3 = #{loginNo} or refNo1 = #{loginNo} or refNo2 = #{loginNo})
+		        order by originNo desc, groupOrd asc
+		    )
+		    where rownum <= #{pageNum} * #{amount} 		    
+		]]>            
+		    <if test="keyword != null">
+		        <include refid="criteria"></include> 
+		    </if>
+		<![CDATA[
+		)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+    </select>
+	<!-- temp 게시물 목록(페이징) : 임시저장 -->
+    <select id="getTempList" resultType="com.globalin.shine.domain.approval.ApprovalVO">
+    <![CDATA[
+		select no, form, title, writer, writeDay, updateDay, originNo, groupOrd, temp, titleReply
+		from(
+		    select rownum as rn, no, form, title, writer, updateDay, writeDay, state, originNo, groupOrd, temp, titleReply
+		    from (
+		        select no, form, title, writer, writeDay, updateDay, state, originNo, groupOrd, temp, titleReply
+		        from approval
+		        WHERE temp = '임시저장' 
+				AND writerNo = #{loginNo}
+		        order by originNo desc, groupOrd asc
+		    )
+		    where rownum <= #{pageNum} * #{amount} 		    
+		]]>            
+		    <if test="keyword != null">
+		        <include refid="criteria"></include> 
+		    </if>
+		<![CDATA[
+		)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+    </select>
+    <update id="updateOriginNo">
+    	UPDATE approval
+		SET originNo = CASE
+		    WHEN originNo IS NULL THEN no
+		    ELSE originNo
+		END
+    </update>
+    <!-- 게시물 총 개수 -->
+    <select id="getTotal" resultType="int">
+        select count(*) from approval
+        <if test="keyword != null">
+            where no > 0 <include refid="criteria"></include>
+        </if>
+    </select>
+    <!-- 첨언하기 -->
+	<insert id="insertReply">
+    INSERT INTO approval 
+        (titleReply, contentReply, replyDept, writeDay, originNo, groupOrd, updateDay, temp, form,
+        title, startDept, endDept, content, appNo1, appDay1, appState1, appNo2, appDay2, appState2, 
+        appNo3, appDay3, appState3, refNo1, refNo2, writerReplyNo, writer, writerReply)
+    VALUES (#{titleReply}, #{contentReply}, #{replyDept}, to_char(sysdate, 'yyyy-mm-dd hh24:mi:ss'), 
+    		#{no}, (SELECT COALESCE(MAX(groupOrd), 0) + 1 FROM approval WHERE originNo = #{no}), 
+    		to_char(sysdate, 'yyyy-mm-dd hh24:mi:ss'), #{temp}, #{form}, #{title}, #{startDept}, #{endDept},
+    		#{content}, #{appNo1}, #{appDay1}, #{appState1}, #{appNo2}, #{appDay2}, #{appState2}, #{appNo3},
+    		#{appDay3}, #{appState3}, #{refNo1}, #{refNo2}, #{writerReplyNo}, #{writer}, #{writerReply})
+	</insert>
+	<!-- 첨언 임시저장글 수정 -->
+    <update id="updateReply">
+	    update approval
+	    <set>
+	        <if test="titleReply != null">
+	            titleReply = #{titleReply},
+	        </if>
+	        <if test="contentReply != null">
+	            contentReply = #{contentReply},
+	        </if>
+	        <if test="replyDept != null">
+	            replyDept = #{replyDept},
+	        </if>
+	        <if test="updateDay != null">
+	            updateDay = to_char(sysdate, 'yyyy-mm-dd hh24:mi:ss'),
+	        </if>
+	    </set>
+	    <where>
+	        no = #{no}
+	    </where>
+	</update>
+	<insert id="insertYear">
+        INSERT INTO approval 
+        	(form, endDept, title, appNo1, appNo2, appNo3, refNo1, refNo2, writeDay, temp,
+        	yearUseDays, yearUseDateStart, yearUseDateEnd, yearAmPm, yearReason, updateDay,
+        	writer, writerNo, startDept, state)
+        VALUES (#{form}, #{endDept}, #{title}, #{appNo1}, #{appNo2}, #{appNo3}, #{refNo1}, #{ refNo2}, 
+        		to_char(sysdate, 'yyyy-mm-dd hh24:mi:ss'), #{temp}, #{yearUseDays}, #{yearUseDateStart}, 
+        		#{yearUseDateEnd}, #{yearAmPm}, #{yearReason}, to_char(sysdate, 'yyyy-mm-dd hh24:mi:ss'),
+        		#{writer}, #{writerNo}, #{startDept}, '대기중')
+    </insert>	
+    <select id="getDeptList" resultType="employeeVO">
+    	SELECT 
+    		DISTINCT DeptName
+    	FROM employee
+	</select>
+	<select id="getUserList" resultType="employeeVO">
+    	SELECT 
+    		no, Name, DeptName, ID, PW
+    	FROM employee
+	</select>
+	<update id="updateApp">
+	    UPDATE approval
+	    SET
+	        appDay1 = CASE WHEN #{appDay1} IS NULL THEN appDay1 ELSE #{appDay1} END,
+	        appDay2 = CASE WHEN #{appDay2} IS NULL THEN appDay2 ELSE #{appDay2} END,
+	        appDay3 = CASE WHEN #{appDay3} IS NULL THEN appDay3 ELSE #{appDay3} END,
+	        appState1 = CASE WHEN #{appState1} IS NULL THEN appState1 ELSE #{appState1} END,
+	        appState2 = CASE WHEN #{appState2} IS NULL THEN appState2 ELSE #{appState2} END,
+	        appState3 = CASE WHEN #{appState3} IS NULL THEN appState3 ELSE #{appState3} END
+	    WHERE no = #{no}
+    </update>
+	<update id="updateState">
+		UPDATE approval
+		SET
+			state =
+            CASE
+            	WHEN (appState1 = '반려' OR appState2 = '반려' OR appState3 = '반려') THEN '반려'
+                WHEN (appState1 = '결재' AND appState2 = '결재' AND appState3 = '결재') THEN '결재'
+				WHEN (appState1 = '결재' OR appState2 = '결재' OR appState3 = '결재') THEN '진행중'
+				ElSE state
+            END
+		Where no = #{no}
+	</update>
+	<select id="selectTotal" resultType="dayOffVO">
+		select Total from dayOffinfo
+		where no = #{no}
+	</select>
+	
+	<select id="selectRemind" resultType="dayOffVO">
+		select Remind from dayOffinfo
+		where no = #{no}
+	</select>
+	
+	<select id="selectTemp" resultType="com.globalin.shine.domain.approval.ApprovalVO">
+		select count(*) as countTemp from approval
+		where temp = '임시저장' and writerno = #{no}
+	</select>
+	
+	<select id="selectInbox" resultType="com.globalin.shine.domain.approval.ApprovalVO">
+    select 			
+		COUNT(*) as countInbox
+	from approval
+	where 
+		temp = '상신' 
+		and (appNo1 = #{loginNo} or appNo2 = #{loginNo} or appNo3 = #{loginNo})
+		and (
+		    (appNo1 = #{loginNo} and appState1 is null)
+		    or (appNo2 = #{loginNo} and appState2 is null)
+		    or (appNo3 = #{loginNo} and appState3 is null)
+			)
+	</select>
+	
+	<select id="getListPagingInYet" resultType="com.globalin.shine.domain.approval.ApprovalVO">
+    <![CDATA[
+		select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+				appNo1, appNo2, appNo3, refNo1, refNo2
+		from(
+		    select rownum as rn, no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+		    		appNo1, appNo2, appNo3, refNo1, refNo2 
+		    from (
+		        select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+		        		appNo1, appNo2, appNo3, refNo1, refNo2
+		        from approval
+		        WHERE 
+		        	temp = '상신' 
+					and (appNo1 = #{loginNo} or appNo2 = #{loginNo} or appNo3 = #{loginNo})
+					and (
+					    (appNo1 = #{loginNo} and appState1 is null)
+					    or (appNo2 = #{loginNo} and appState2 is null)
+					    or (appNo3 = #{loginNo} and appState3 is null)
+						)
+		        order by originNo desc, groupOrd asc
+		    )
+		    where rownum <= #{pageNum} * #{amount} 		    
+		]]>            
+		    <if test="keyword != null">
+		        <include refid="criteria"></include> 
+		    </if>
+		<![CDATA[
+		)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+    </select>
+</mapper>
