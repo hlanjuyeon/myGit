@@ -103,7 +103,7 @@
     <select id="getListPagingOut" resultType="com.globalin.shine.domain.approval.ApprovalVO">
     <![CDATA[
 		select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
-				appNo1, appNo2, appNo3, refNo1, refNo2, GREATEST(appDay1, appDay2, appDay3) AS appDay,
+				appNo1, appNo2, appNo3, refNo1, refNo2, GREATEST(appDay1, appDay2, appDay3) AS appDay, writerReply,
 				appState1, appState2, appState3,
 				CASE
 					WHEN (appState1 = '반려') THEN appDay1
@@ -112,10 +112,10 @@
 				END AS rejectDay
 		from(
 		    select rownum as rn, no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
-		    		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3
+		    		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3, writerReply
 		    from (
 		        select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
-		        		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3
+		        		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3, writerReply
 		        from approval
 		        WHERE temp = '상신' 
 		        AND writerNo = #{loginNo}
@@ -135,7 +135,7 @@
     <select id="getListPagingIn" resultType="com.globalin.shine.domain.approval.ApprovalVO">
     <![CDATA[
 		select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
-				appNo1, appNo2, appNo3, refNo1, refNo2, GREATEST(appDay1, appDay2, appDay3) AS appDay,
+				appNo1, appNo2, appNo3, refNo1, refNo2, GREATEST(appDay1, appDay2, appDay3) AS appDay, writerReply,
 				appState1, appState2, appState3,
 				CASE
 					WHEN (appState1 = '반려') THEN appDay1
@@ -144,10 +144,10 @@
 				END AS rejectDay
 		from(
 		    select rownum as rn, no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
-		    		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3
+		    		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3, writerReply
 		    from (
 		        select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
-		        		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3
+		        		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3, writerReply
 		        from approval
 		        WHERE temp = '상신' 
 				AND (appNo1 = #{loginNo} or appNo2 = #{loginNo} or appNo3 = #{loginNo} or refNo1 = #{loginNo} or refNo2 = #{loginNo})
@@ -166,11 +166,11 @@
 	<!-- temp 게시물 목록(페이징) : 임시저장 -->
     <select id="getTempList" resultType="com.globalin.shine.domain.approval.ApprovalVO">
     <![CDATA[
-		select no, form, title, writer, writeDay, updateDay, originNo, groupOrd, temp, titleReply
+		select no, form, title, writer, writeDay, updateDay, state, originNo, groupOrd, temp, titleReply, writerReply
 		from(
-		    select rownum as rn, no, form, title, writer, updateDay, writeDay, state, originNo, groupOrd, temp, titleReply
+		    select rownum as rn, no, form, title, writer, updateDay, writeDay, state, originNo, groupOrd, temp, titleReply, writerReply
 		    from (
-		        select no, form, title, writer, writeDay, updateDay, state, originNo, groupOrd, temp, titleReply
+		        select no, form, title, writer, writeDay, updateDay, state, originNo, groupOrd, temp, titleReply, writerReply
 		        from approval
 		        WHERE temp = '임시저장' 
 				AND writerNo = #{loginNo}
@@ -178,9 +178,6 @@
 		    )
 		    where rownum <= #{pageNum} * #{amount} 		    
 		]]>            
-		    <if test="keyword != null">
-		        <include refid="criteria"></include> 
-		    </if>
 		<![CDATA[
 		)
 		where rn > (#{pageNum} - 1) * #{amount}

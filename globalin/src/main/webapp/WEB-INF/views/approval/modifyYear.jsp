@@ -116,7 +116,7 @@ $(function() {
                     <span>상신부서</span> > <span>수신부서</span>
                 </td>
                 <td colspan="3">
-                    <input type="text" name="startDept" class="employee" /> > 
+                    <input type="text" name="startDept" class="startdept" /> > 
                     <select name="endDept" class="write_list">
 			            <option value="" >수신부서를 선택해주세요.</option>
 			            <c:forEach items="${emp}" var="emp">

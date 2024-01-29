@@ -10,7 +10,6 @@
 	
 	<!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <link rel="stylesheet" href="/resources/approval/list.css" type="text/css">
     
@@ -93,6 +92,7 @@ $(document).ready(function() {
             selectedOption.value = null;
         }
     });
+    
 })
 </script>
 </head>
@@ -131,7 +131,7 @@ $(document).ready(function() {
                     <span>상신부서</span> > <span>수신부서</span>
                 </td>
                 <td colspan="3">
-                    <input type="text" class="employee" name="startDept" value='<c:out value='${employee.deptName}'/>' readonly/> > 
+                    <input type="text" name="startDept" class="employee" value='<c:out value='${employee.deptName}'/>' readonly/> > &nbsp;&nbsp;
                     <select name="endDept" class="write_list">
 			            <option value="" >수신부서를 선택해주세요.</option>
 			            <c:forEach items="${emp}" var="emp">
@@ -145,7 +145,7 @@ $(document).ready(function() {
             <tr>
                 <td class="index">상신자</td>
                 <td colspan="3">
-                    <input type="text" class="employee" name="writer" value='<c:out value='${employee.name}'/>' readonly/>
+                    <input type="text" name="writer" class="employee" value='<c:out value='${employee.name}'/>' readonly/>
                     <input type="hidden" name="writerNo" value='<c:out value='${employee.no}'/>'>
                 </td>
             </tr>
@@ -228,7 +228,6 @@ $(document).ready(function() {
             </tr>
         </table>
         </div>
-	</div>
         <div class="write_bottom">
 	        <div class="left_btn">
 	            <button type="button" class="my_btn" onclick="location.href='/approval/temp?loginNo=<c:out value="${employee.no}"/>'">저장목록</button>
@@ -236,10 +235,11 @@ $(document).ready(function() {
 	            <input type="hidden" name="temp">
 	        </div>
 	        <div class="right_btn">
-	            <button type="button" class="my_btn" onclick="location.href='/approval/list'">취소하기</button>
+	            <button type="button" class="my_btn" onclick="location.href='/approval/listIn?loginNo=<c:out value="${employee.no}"/>'">취소하기</button>
 	            <button type="submit" class="write_btn" id="send_list">상신하기</button>
 	        </div>
-    </form>
-</div>
+    	</div>
+   	</form>
+	</div>
 </body>
 </html>

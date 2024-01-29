@@ -205,7 +205,7 @@ $(document).ready(function() {
             <tr>
                 <td class="index">첨언 부서</td>
                 <td colspan="2">
-                	<select name="replyDept"class="write_list replydept_input employee">
+                	<select name="replyDept" class="write_list replydept_input">
 			            <option value="" >첨언부서를 선택해주세요.</option>
 			            <c:forEach items="${emp}" var="emp">
 			            	<option value="${emp.deptName}"
@@ -221,10 +221,7 @@ $(document).ready(function() {
             </tr>
             <tr>
                 <td class="index">첨언자</td>
-                <td colspan="2">
-                	<input type="text" class="employee" name="writerReply" value='<c:out value='${employee.name}'/>' readonly/>
-                	<input type="hidden" name="writerReplyNo" value='<c:out value='${employee.no}'/>'>
-                </td>
+                <td colspan="2">유저 첨언자 출력</td>
             </tr>
             <tr class="index">
                 <td colspan="3" class="content_index">

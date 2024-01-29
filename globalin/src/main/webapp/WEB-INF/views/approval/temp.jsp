@@ -10,7 +10,6 @@
 	
 	<!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <link rel="stylesheet" href="/resources/approval/list.css" type="text/css">
 <title>임시저장</title>
@@ -84,7 +83,6 @@ $(document).ready(function() {
             <p class="payment_date">수정일시</p>
         </div>
         <c:forEach items="${temp}" var="item"> 
-        	<div class="a_move">
             <a class="move" href='<c:out value="${item.no}"/>'>
 	        	<div class="list_item">
 		            <p class="no"><c:out value="${item.no}"/></p>
@@ -92,17 +90,28 @@ $(document).ready(function() {
 		            <p class="title_temp">
 					    <c:out value="${item.form eq '첨언' ? item.titleReply : item.title}" escapeXml="false" />
 					</p>
-		            <p class="writer"><c:out value="${item.writer}"/></p>
+		            <p class="writer">
+		            	<c:out value="${item.form eq '첨언' ? item.writerReply : item.writer}" escapeXml="false" />
+		            </p>
 		            <p class="write_date"><c:out value="${item.writeDay}"/></p>
 		            <p class="payment_date"><c:out value="${item.updateDay}"/></p>
 	            </div>
             </a>
-            </div>
         </c:forEach>
     </div>
 </div>
         <div class="main_bottom temp_bottom">
-	    
+	    <div class="search_area">
+	     	<select name="type" class="search_list">
+	            <option value="" <c:out value="${pageMaker.criteria.type == null?'selected':'' }"/>>--</option>
+	            <option value="T" <c:out value="${pageMaker.criteria.type eq 'T'?'selected':'' }"/>>제목</option>
+	            <option value="C" <c:out value="${pageMaker.criteria.type eq 'C'?'selected':'' }"/>>내용</option>
+	            <option value="W" <c:out value="${pageMaker.criteria.type eq 'W'?'selected':'' }"/>>작성자</option>
+	            <option value="P" <c:out value="${pageMaker.criteria.type eq 'TC'?'selected':'' }"/>>상태</option>
+	        </select>
+	        <input type="text" class="search_text" name="keyword" value="${pageMaker.criteria.keyword}">
+	        <button class="search_button">검색</button>
+	    </div>
         <div class="pageInfo_wrap">
     <ul id="pageInfo" class="pageInfo">
         <!-- 이전페이지 버튼 -->
@@ -124,6 +133,8 @@ $(document).ready(function() {
     <form id="moveForm" method="get">
     	<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum}">
         <input type="hidden" name="amount" value="${pageMaker.criteria.amount}">   
+        <input type="hidden" name="keyword" value="${pageMaker.criteria.keyword}">
+    	<input type="hidden" name="type" value="${pageMaker.criteria.type}">
     	<input type="hidden" name="loginNo" value='<c:out value="${employee.no}"/>'>
     </form>
 </body>

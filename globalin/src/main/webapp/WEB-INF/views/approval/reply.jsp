@@ -40,11 +40,11 @@
 }
 .body_right {
     min-width: 90%;
-	height: 100%;
+height: 100%;
 }
 
 .note-editor.note-frame .note-editing-area {
-    height: 300px !important;
+    height: 250px !important;
 }
 
 </style>
@@ -82,7 +82,6 @@ $(document).ready(function() {
          };
 
 	$('#summernote').summernote(setting);
-
     
     document.querySelector("#send_list").addEventListener("click", () => {
     	document.querySelector("input[name=temp]").value = "상신";
@@ -91,6 +90,67 @@ $(document).ready(function() {
     document.querySelector("#send_temp").addEventListener("click", () => {
     	document.querySelector("input[name=temp]").value = "임시저장";
     });
+    
+	const BtnSuccess = document.querySelector(".btn-success");
+	const BtnDanger = document.querySelector(".btn-danger");
+	
+	function disableSubmitButton(event) {
+		alert("이미 반려된 상신문서입니다. 더 이상 결재를 진행할 수 없습니다.");
+		event.preventDefault(); // 기본 이벤트 동작을 막습니다.
+	}
+    
+	var buttonSuccess1 = document.querySelector(".appNo1btnS");
+	var buttonDanger1 = document.querySelector(".appNo1btnD");
+	var buttonSuccess2 = document.querySelector(".appNo2btnS");
+	var buttonDanger2 = document.querySelector(".appNo2btnD");
+	var buttonSuccess3 = document.querySelector(".appNo3btnS");
+	var buttonDanger3 = document.querySelector(".appNo3btnD");
+    
+	var appState1 = "${detail.appState1}";
+	var appState2 = "${detail.appState2}";
+	var appState3 = "${detail.appState3}";
+	
+	if(appState1 === "결재") {
+		buttonSuccess1.style.display = "none";
+		buttonDanger1.style.display = "none";
+		document.querySelector(".approve1_display").style.display = "block";
+	} else if(appState1 === "반려") {
+		buttonSuccess1.style.display = "none";
+		buttonDanger1.style.display = "none";
+		document.querySelector(".reject1_display").style.display = "block";
+		buttonSuccess2.addEventListener("click", disableSubmitButton);
+		buttonSuccess3.addEventListener("click", disableSubmitButton);
+		buttonDanger2.addEventListener("click", disableSubmitButton);
+		buttonDanger3.addEventListener("click", disableSubmitButton);
+	}
+	
+	if(appState2 === "결재") {
+		buttonSuccess2.style.display = "none";
+		buttonDanger2.style.display = "none";
+		document.querySelector(".approve2_display").style.display = "block";
+	} else if(appState2 === "반려") {
+		buttonSuccess2.style.display = "none";
+		buttonDanger2.style.display = "none";
+		document.querySelector(".reject2_display").style.display = "block";
+		buttonSuccess1.addEventListener("click", disableSubmitButton);
+		buttonSuccess3.addEventListener("click", disableSubmitButton);
+		buttonDanger1.addEventListener("click", disableSubmitButton);
+		buttonDanger3.addEventListener("click", disableSubmitButton);		
+	}
+	
+	if(appState3 === "결재") {
+		buttonSuccess3.style.display = "none";
+		buttonDanger3.style.display = "none";
+		document.querySelector(".approve3_display").style.display = "block";
+	} else if(appState3 === "반려") {
+		buttonSuccess3.style.display = "none";
+		buttonDanger3.style.display = "none";
+		document.querySelector(".reject3_display").style.display = "block";
+		buttonSuccess1.addEventListener("click", disableSubmitButton);
+		buttonSuccess2.addEventListener("click", disableSubmitButton);
+		buttonDanger1.addEventListener("click", disableSubmitButton);
+		buttonDanger2.addEventListener("click", disableSubmitButton);
+	}
 });
 </script>
 </head>
@@ -111,7 +171,7 @@ $(document).ready(function() {
                 <td class="index">
                     <span>상신부서</span> > <span>수신부서</span>
                 </td>
-                <td colspan="2"><c:out value="${detail.startDept}"/>><c:out value="${detail.endDept}"/></td>
+                <td colspan="2"><c:out value="${detail.startDept}"/>&nbsp;&nbsp;>&nbsp;&nbsp;<c:out value="${detail.endDept}"/></td>
             </tr>
             <tr>
                 <td class="index">상신자</td>
@@ -175,20 +235,14 @@ $(document).ready(function() {
             </tr>
             <tr>
             	<td>
-            		<input type="hidden" name="appDay1">
-            		<input type="hidden" name="appState1">
             		<span class="appDay1_display"></span>
             		<span><c:out value="${detail.appDay1}"/></span>
             	</td>
             	<td>
-            		<input type="hidden" name="appDay2">
-            		<input type="hidden" name="appState2">
             		<span class="appDay2_display"></span>
             		<span><c:out value="${detail.appDay2}"/></span>
             	</td>
             	<td>
-            		<input type="hidden" name="appDay3">
-            		<input type="hidden" name="appState3">
             		<span class="appDay3_display"></span>
             		<span><c:out value="${detail.appDay3}"/></span>
             	</td>
@@ -207,13 +261,13 @@ $(document).ready(function() {
             <tr>
                 <td class="index">첨언 부서</td>
                 <td colspan="2">
-					<input type="text" class="employee" name="replyDept" value='<c:out value='${employee.deptName}'/>' readonly/>
+					<input type="text" name="replyDept" class="employee" value='<c:out value='${employee.deptName}'/>' readonly/>
                 </td>
             </tr>
             <tr>
                 <td class="index">첨언자</td>
                 <td colspan="2">
-                	<input type="text" class="employee" name="writerReply" value='<c:out value='${employee.name}'/>' readonly/>
+                	<input type="text" name="writerReply" class="employee" value='<c:out value='${employee.name}'/>' readonly/>
                 	<input type="hidden" name="writerReplyNo" value='<c:out value='${employee.no}'/>'>
                 </td>
             </tr>
@@ -223,7 +277,7 @@ $(document).ready(function() {
                 </td>
             </tr>
             <tr>
-                <td colspan="3" class="content_text summernote">
+                <td colspan="3" class="content_text reply_content summernote">
                     <textarea id="summernote" name="contentReply" class="content_input" placeholder="내용을 입력하세요." required></textarea>
                 </td>
             </tr>
@@ -231,12 +285,12 @@ $(document).ready(function() {
         </div>
         <div class="write_bottom year_bottom">
 	        <div class="left_btn">
-	            <button type="button" class="my_btn" onclick="location.href='/approval/tempRef'">저장목록</button>
+	            <button type="button" class="my_btn" onclick="location.href='/approval/temp?loginNo=<c:out value="${employee.no}"/>'">저장목록</button>
 	            <button type="submit" class="write_btn" id="send_temp">임시저장</button>  
 	            <input type="hidden" class="send_temp_hidden" name="temp">
 	        </div>
 	        <div class="right_btn">
-	            <button type="button" class="my_btn" onclick="location.href='/approval/list'">취소하기</button>
+	            <button type="button" class="my_btn" onclick="location.href='/approval/listIn?loginNo=<c:out value="${employee.no}"/>'">취소하기</button>
 	            <button type="submit" class="write_btn" id="send_list">첨언하기</button>
 	        </div>
 	        <input type="hidden" name="no" value='<c:out value="${detail.docNo}" />'>
@@ -252,7 +306,12 @@ $(document).ready(function() {
     		<input type="hidden" name="refNo1" value='<c:out value="${detail.refNo1}"/>' >
     		<input type="hidden" name="refNo2" value='<c:out value="${detail.refNo2}"/>' >
     		<input type="hidden" name="writer" value='<c:out value="${detail.writer}"/>' >
-    		
+    		<input type="hidden" name="appState1" value='<c:out value="${detail.appState1}"/>' >
+    		<input type="hidden" name="appState2" value='<c:out value="${detail.appState2}"/>' >
+    		<input type="hidden" name="appState3" value='<c:out value="${detail.appState3}"/>' >
+    		<input type="hidden" name="appDay1" value='<c:out value="${detail.appDay1}"/>' >
+    		<input type="hidden" name="appDay2" value='<c:out value="${detail.appDay2}"/>' >
+    		<input type="hidden" name="appDay3" value='<c:out value="${detail.appDay3}"/>' >
     	</div>
     </form> 
 	</div>

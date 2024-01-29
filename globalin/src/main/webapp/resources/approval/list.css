@@ -1,14 +1,14 @@
-/* �끂�듃遺� & PC */ 
+/* 노트북 & PC */ 
 @media all and (min-width:1080px) and (max-width:1920px) {
     
 } 
   
-/* �뀒釉붾┸ 媛�濡�, �뀒釉붾┸ �꽭濡� */ 
+/* 테블릿 가로, 테블릿 세로 */ 
 @media all and (min-width:768px) and (max-width:1024px) {
     
 } 
   
-/* 紐⑤컮�씪 媛�濡�, 紐⑤컮�씪 �꽭濡� */ 
+/* 모바일 가로, 모바일 세로 */ 
 @media all and (min-width:360px) and (max-width:800px) {
    
 }
@@ -228,12 +228,11 @@ a {
     min-width: calc(100% - 240px);
 /*     position: fixed; */
     height: 50px;
-    margin-left: 230px;
     margin-top: 20px;
 }
 
 .left_btn {
-    width: 20%;
+    width: 30%;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -545,4 +544,19 @@ a {
 input[type='date']::before {
   content: attr(data-placeholder);
   width: 100%;
+}
+
+.input_yearUseDays,
+.input_yearReason {
+	width: 400px;
+    height: 30px;
+    text-align: center;
+    font-size: 17px;
+}
+
+.input_yearDate {
+	width: 300px;
+    height: 30px;
+    text-align: center;
+    font-size: 17px;
 }

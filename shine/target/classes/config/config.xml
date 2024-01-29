@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    
+	<typeAliases>
+		<typeAlias type="com.globalin.shine.domain.calendar.CalendarVO" alias="calendarVO"/>
+		<typeAlias type="com.globalin.shine.domain.approval.ApprovalVO" alias="approvalVO"/>
+		<typeAlias type="com.globalin.shine.domain.employee.EmployeeVO" alias="employeeVO" />
+     	<typeAlias type="com.globalin.shine.domain.commute.CommuteVO" alias="commuteVO"/>
+     	<typeAlias type="com.globalin.shine.domain.commute.TimeVO" alias="timeVO"/>
+		<typeAlias type="com.globalin.shine.domain.board.BoardVO" alias="boardVO"/>
+		<typeAlias type="com.globalin.shine.domain.board.BoardDTO" alias="boardDTO"/>
+		<typeAlias type="com.globalin.shine.domain.board.ReplyVO" alias="replyVO"/>
+		<typeAlias type="com.globalin.shine.domain.board.FileVO" alias="fileVO"/>
+		<typeAlias type="com.globalin.shine.domain.board.FileDTO" alias="fileDTO"/>
+		<typeAlias type="com.globalin.shine.domain.dayoff.DayOffVO" alias="dayOffVO"/>
+		<typeAlias type="com.globalin.shine.domain.shineinfo.ShineInfoVO" alias="shineInfoVO"/>
+	</typeAliases>
+
+</configuration>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.globalin.shine.mapper.shineinfo.ShineInfoMapper">
+	
+	<select id="shineInfoList" resultType="shineInfoVO">
+	SELECT Employee.name, Employee.no, Employee.position, Employee.deptName, Employee.deptNo, Employee.call,
+	Employee.email, Employee.hireDate, Employee.exitDate, Employee.status
+    FROM Employee
+	</select>
+	
+	<select id="viewDetailsShineInfo" resultType="shineInfoVO">
+	SELECT Employee.no, Employee.id, Employee.pw, Employee.name, Employee.position, Employee.phone, Employee.call, Employee.email, 
+	Employee.gender, Employee.birth, Employee.deptName, Employee.deptNo, Employee.hireDate, Employee.exitDate, Employee.status
+    FROM Employee WHERE NO=#{no}
+	</select>
+	
+	<update id="updateAdmin">
+	UPDATE Employee    
+		<set>
+			<if test="name != null">
+				NAME = #{name},
+			</if>
+			<if test="gender != null">
+				GENDER = #{gender}, 
+			</if>
+			<if test="birth != null">
+				BIRTH = #{birth},
+			</if>
+			<if test="id != null">
+				id = #{id},
+			</if>
+			<if test="pw != null">
+				pw = #{pw},
+			</if>
+			<if test="position != null">
+				POSITION= #{position},
+			</if>
+			<if test="deptName != null">
+				DEPTNAME= #{deptName},
+			</if>
+			<if test="deptNo != null">
+				DEPTNO= #{deptNo},
+			</if>
+			<if test="phone != null">
+				PHONE= #{phone},
+			</if>
+			<if test="call != null">
+				CALL= #{call},
+			</if>
+			<if test="email != null">
+				EMAIL= #{email},
+			</if>
+			<if test="hireDate != null">
+				HIREDATE= #{hireDate},
+			</if>
+			<if test="exitDate != null">
+				EXITDATE= #{exitDate},
+			</if>
+			<if test="status != null">
+				STATUS= #{status},
+			</if>
+		</set>
+	WHERE NO = #{no}
+	</update>
+	
+	<select id="updateAdminRead" resultType="shineInfoVO">
+	SELECT Employee.no, Employee.id, Employee.pw, Employee.name, Employee.position, Employee.phone, Employee.call, Employee.email, 
+	Employee.gender, Employee.birth, Employee.deptName, Employee.deptNo, Employee.hireDate, Employee.exitDate, Employee.status
+    FROM Employee WHERE NO=#{no}
+	</select>
+	
+	</mapper>

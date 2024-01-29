@@ -7,8 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="/resources/main/header.css">
-<script src="/resources/main/alertify.min.js" type="text/javascript"></script>
-<script src="/resources/main/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="/resources/js/alertify.min.js" type="text/javascript"></script>
+<script src="/resources/js/jquery-3.4.1.js" type="text/javascript"></script>
 <style>
 	body {
 	width: 1800px;

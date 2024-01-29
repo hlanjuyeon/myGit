@@ -40,7 +40,7 @@ height: 100%;
 
 </style>
 <script type="text/javascript">
-$(function() {
+$(document).ready(function() {	
 	function handleRadioButtonClick() {
 		if (document.querySelector("#etc").checked) {
 		    // 입력 필드의 값이 비어있는지 확인
@@ -70,6 +70,93 @@ $(function() {
 		removeRequiredAttribute();
 		document.querySelector(".send_temp_hidden").value = "임시저장";
 	});
+	
+	var buttonSuccess1 = document.querySelector(".appNo1btnS");
+	var buttonDanger1 = document.querySelector(".appNo1btnD");
+	var buttonSuccess2 = document.querySelector(".appNo2btnS");
+	var buttonDanger2 = document.querySelector(".appNo2btnD");
+	var buttonSuccess3 = document.querySelector(".appNo3btnS");
+	var buttonDanger3 = document.querySelector(".appNo3btnD");
+    
+	var appState1 = "${detail.appState1}";
+	var appState2 = "${detail.appState2}";
+	var appState3 = "${detail.appState3}";
+	
+	if(appState1 === "결재") {
+		buttonSuccess1.style.display = "none";
+		buttonDanger1.style.display = "none";
+		document.querySelector(".approve1_display").style.display = "block";
+	} else if(appState1 === "반려") {
+		buttonSuccess1.style.display = "none";
+		buttonDanger1.style.display = "none";
+		document.querySelector(".reject1_display").style.display = "block";
+		buttonSuccess2.addEventListener("click", disableSubmitButton);
+		buttonSuccess3.addEventListener("click", disableSubmitButton);
+		buttonDanger2.addEventListener("click", disableSubmitButton);
+		buttonDanger3.addEventListener("click", disableSubmitButton);
+	}
+	
+	if(appState2 === "결재") {
+		buttonSuccess2.style.display = "none";
+		buttonDanger2.style.display = "none";
+		document.querySelector(".approve2_display").style.display = "block";
+	} else if(appState2 === "반려") {
+		buttonSuccess2.style.display = "none";
+		buttonDanger2.style.display = "none";
+		document.querySelector(".reject2_display").style.display = "block";
+		buttonSuccess1.addEventListener("click", disableSubmitButton);
+		buttonSuccess3.addEventListener("click", disableSubmitButton);
+		buttonDanger1.addEventListener("click", disableSubmitButton);
+		buttonDanger3.addEventListener("click", disableSubmitButton);		
+	}
+	
+	if(appState3 === "결재") {
+		buttonSuccess3.style.display = "none";
+		buttonDanger3.style.display = "none";
+		document.querySelector(".approve3_display").style.display = "block";
+	} else if(appState3 === "반려") {
+		buttonSuccess3.style.display = "none";
+		buttonDanger3.style.display = "none";
+		document.querySelector(".reject3_display").style.display = "block";
+		buttonSuccess1.addEventListener("click", disableSubmitButton);
+		buttonSuccess2.addEventListener("click", disableSubmitButton);
+		buttonDanger1.addEventListener("click", disableSubmitButton);
+		buttonDanger2.addEventListener("click", disableSubmitButton);
+	}
+	
+	const BtnSuccess = document.querySelector(".btn-success");
+	const BtnDanger = document.querySelector(".btn-danger");
+	
+	function disableSubmitButton(event) {
+		alert("이미 반려된 상신문서입니다. 더 이상 결재를 진행할 수 없습니다.");
+		event.preventDefault(); // 기본 이벤트 동작을 막습니다.
+	}
+	
+	// 버튼 클릭 이벤트에 showAlert 함수 연결
+	buttonSuccess1.addEventListener("click", showSuccess1Alert);
+	buttonSuccess2.addEventListener("click", showSuccess2Alert);
+	buttonSuccess3.addEventListener("click", showSuccess3Alert);
+	buttonDanger1.addEventListener("click", showDanger1Alert);
+	buttonDanger2.addEventListener("click", showDanger2Alert);
+	buttonDanger3.addEventListener("click", showDanger3Alert);
+	
+	if(appState1 === "반려") {
+		buttonSuccess2.removeEventListener("click", showSuccess2Alert);
+		buttonSuccess3.removeEventListener("click", showSuccess3Alert);
+		buttonDanger2.removeEventListener("click", showDanger2Alert);
+		buttonDanger3.removeEventListener("click", showDanger3Alert);
+	} else if(appState2 === "반려") {
+		buttonSuccess1.removeEventListener("click", showSuccess1Alert);
+		buttonSuccess3.removeEventListener("click", showSuccess3Alert);
+		buttonDanger1.removeEventListener("click", showDanger1Alert);
+		buttonDanger3.removeEventListener("click", showDanger3Alert);
+	} else if(appState3 === "반려") {
+		buttonSuccess1.removeEventListener("click", showSuccess1Alert);
+		buttonSuccess2.removeEventListener("click", showSuccess2Alert);
+		buttonDanger1.removeEventListener("click", showDanger1Alert);
+		buttonDanger2.removeEventListener("click", showDanger2Alert);
+	}
+	
 });
 </script>
 </head>
@@ -78,7 +165,7 @@ $(function() {
     <div class="body_css">
     
 	<%@ include file="/WEB-INF/views/main/navigation.jsp" %>
-	<form action="/approval/reply" method="post" class="write_border">
+	<form action="/approval/delete" method="post" class="write_border">
 		<div class="table_two">
         <table class="table_one">
             <tr>
@@ -133,23 +220,47 @@ $(function() {
             </tr>
             <tr>
             	<td>
-            		<input type="submit" class="btn btn-success appNo1btnS" value="결재"/>
-            		<input type="submit" class="btn btn-danger appNo1btnD" value="반려"/>
-            		<img class="approve approve1_display" src="/resources/approval/approve.png">
-            		<img class="approve reject1_display" src="/resources/approval/reject.png">
+            		<c:choose>
+						<c:when test="${detail.appState1 == '결재'}">
+						    <img class="approve" src="/resources/approval/approve.png">
+						</c:when>
+						<c:when test="${detail.appState1 == '반려'}">
+						    <img class="approve" src="/resources/approval/reject.png">
+						</c:when>
+						<c:otherwise>
+						    <input type="submit" class="btn btn-success appNo1btnS" value="결재"/>
+						    <input type="submit" class="btn btn-danger appNo1btnD" value="반려"/>
+						</c:otherwise>
+				    </c:choose>
             	</td>
             	<td>
-            		<input type="submit" class="btn btn-success appNo2btnS" value="결재"/>
-            		<input type="submit" class="btn btn-danger appNo2btnD" value="반려"/>
-            		<img class="approve approve2_display" src="/resources/approval/approve.png">
-            		<img class="approve reject2_display" src="/resources/approval/reject.png">
+            		<c:choose>
+						<c:when test="${detail.appState2 == '결재'}">
+						    <img class="approve" src="/resources/approval/approve.png">
+						</c:when>
+						<c:when test="${detail.appState2 == '반려'}">
+						    <img class="approve" src="/resources/approval/reject.png">
+						</c:when>
+						<c:otherwise>
+						    <input type="submit" class="btn btn-success appNo1btnS" value="결재"/>
+						    <input type="submit" class="btn btn-danger appNo1btnD" value="반려"/>
+						</c:otherwise>
+				    </c:choose>
             	</td>
             	<td>
-            		<input type="submit" class="btn btn-success appNo3btnS" value="결재"/>
-            		<input type="submit" class="btn btn-danger appNo3btnD" value="반려"/>
-            		<img class="approve approve3_display" src="/resources/approval/approve.png">
-            		<img class="approve reject3_display" src="/resources/approval/reject.png">
-            	</td>
+            		<c:choose>
+						<c:when test="${detail.appState3 == '결재'}">
+						    <img class="approve" src="/resources/approval/approve.png">
+						</c:when>
+						<c:when test="${detail.appState3 == '반려'}">
+						    <img class="approve" src="/resources/approval/reject.png">
+						</c:when>
+						<c:otherwise>
+						    <input type="submit" class="btn btn-success appNo1btnS" value="결재"/>
+						    <input type="submit" class="btn btn-danger appNo1btnD" value="반려"/>
+						</c:otherwise>
+				    </c:choose>
+				</td>	    
             </tr>
             <tr>
             	<td>
@@ -213,7 +324,7 @@ $(function() {
         </div>
         <div class="write_bottom">
 	        <div class="left_btn">
-	            <button type="button" class="my_btn" onclick="location.href='/approval/list?pageNum=<c:out value="${criteria.pageNum}"/>&amount=<c:out value="${criteria.amount}"/>'">목록이동</button>
+	            <button type="button" class="my_btn" onclick="location.href='/approval/listIn?loginNo=${employee.no}'">목록이동</button>
 	        </div>
 	        <div class="right_btn">
 	            <button type="submit" class="write_btn delete_btn">삭제하기</button>

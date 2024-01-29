@@ -10,7 +10,6 @@
 	
 	<!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <link rel="stylesheet" href="/resources/approval/list.css" type="text/css">
     
@@ -126,7 +125,7 @@ $(document).ready(function() {
                     <span>상신부서</span> > <span>수신부서</span>
                 </td>
                 <td colspan="3">
-                    <input type="text" name="startDept" class="employee" value='<c:out value="${detail.startDept}"/>'> > 
+                    <input type="text" name="startDept" class="startdept" value='<c:out value="${detail.startDept}"/>'> > 
                     <select name="endDept" class="write_list">
 			            <option value="" >수신부서를 선택해주세요.</option>
 			            <c:forEach items="${emp}" var="emp">
@@ -144,7 +143,7 @@ $(document).ready(function() {
             <tr>
                 <td class="index">상신자</td>
                 <td colspan="3">
-                    <input type="text" class="employee" name="writer" value='<c:out value="${detail.writer}"/>'>
+                    <input type="text" name="writer" value='<c:out value="${detail.writer}"/>'>
                 </td>
             </tr>
             <tr>

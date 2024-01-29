@@ -1,0 +1,26 @@
+.button, input[type=button], input[type=submit], input[type=reset] {
+	background-color:#3D9970;
+	color: white;
+	border: 2px solid #3D9970;
+	border-radius: 15px;
+	padding: 10px 10px;
+	font-size: 16px;
+}
+
+.button:hover, input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
+	background-color: white;
+	color: #3D9970;
+	transition-duration: 0.3s;
+	border: 2px solid #3D9970;
+	cursor: pointer;
+}
+
+.MainContainer {
+	border: 2px solid #1A5D1A;
+	border-radius: 13px;
+}
+
+.MainContainer a {
+	text-decoration: none;
+	color: #1A5D1A;
+}

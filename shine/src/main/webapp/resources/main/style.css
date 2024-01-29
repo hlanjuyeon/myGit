@@ -1,0 +1,37 @@
+/*
+메인 스타일 css
+작성자 : 윤기영
+*/
+/* 버튼 CSS*/
+.button{
+	background-color:#3D9970;
+	color: white;
+	border: 2px solid #3D9970;
+	border-radius: 15px;
+	padding: 10px 10px;
+	font-size: 16px;
+}
+/* 2023-12-05 input type button, submit css 추가 */
+
+
+/* 버튼 호버 CSS*/
+.button:hover {
+	background-color: white;
+	color: #3D9970;
+	transition-duration: 0.3s;
+	border: 2px solid #3D9970;
+	cursor: pointer;
+}
+/* 2023-12-05 input type button, submit css 추가 */
+
+
+/* 메인 CSS*/
+.MainContainer {
+	border: 2px solid #3D9970;
+	border-radius: 13px;
+}
+
+/* 메인 a 태그 CSS*/
+.MainContainer a {
+	text-decoration: none;
+}

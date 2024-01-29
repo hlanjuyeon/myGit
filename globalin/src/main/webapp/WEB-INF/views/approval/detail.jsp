@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -43,6 +43,8 @@ height: 100%;
 </style>
 <script type="text/javascript">
 $(document).ready(function() {	
+	var moveForm = $("#moveForm");
+	
     // delete_btn 클릭 이벤트 처리
     $(".delete_btn").on("click", function() {
         alert("상신 문서가 삭제되었습니다.");
@@ -424,20 +426,23 @@ $(function() {
         </div>
         <div class="write_bottom year_bottom">
 	        <div class="left_btn">
-			    <button type="button" class="my_btn" onclick="location.href='/approval/list?pageNum=${pageMaker.criteria.pageNum}&amount=${pageMaker.criteria.amount}'">목록이동</button>
+			    <button type="button" class="my_btn" onclick="location.href='/approval/listIn?loginNo=${employee.no}'">목록이동</button>
 			</div>
 			<div class="right_btn">
 			    <button type="button" class="my_btn" onclick="location.href='/approval/reply?no=<c:out value="${detail.docNo}" />'">첨언하기</button>
 			    <button type="submit" class="write_btn delete_btn">삭제하기</button>
+			    
 			</div>
-			<input type="hidden" name="no" value='<c:out value="${detail.docNo}"/>' >
-			<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum}"> 
-	        <input type="hidden" name="amount" value="${pageMaker.criteria.amount}"> 
-    		<input type="hidden" name="keyword" value="${pageMaker.criteria.keyword}">
-    		<input type="hidden" name="type" value="${pageMaker.criteria.type}">
-    		
+			<input type="hidden" name="no" value='<c:out value="${detail.docNo}"/>'>		
     		<input type="hidden" name="state">
     	</div>
+    </form>    		
+    	<form id="moveForm" method="get">
+    	<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum}">
+        <input type="hidden" name="amount" value="${pageMaker.criteria.amount}">   
+        <input type="hidden" name="keyword" value="${pageMaker.criteria.keyword}">
+    	<input type="hidden" name="type" value="${pageMaker.criteria.type}">
+   		<input type="hidden" name="loginNo" value='<c:out value="${employee.no}"/>'>
     </form>
 
 	</div>

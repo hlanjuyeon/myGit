@@ -84,8 +84,8 @@ $(document).ready(function() {
                     <span>상신부서</span> > <span>수신부서</span>
                 </td>
                 <td colspan="3">
-                    <input type="text" class="employee" name="startDept" value='<c:out value='${employee.deptName}'/>' readonly/> >&nbsp;&nbsp;&nbsp; 
-                    <select name="endDept" class="endDept_list">
+                    <input type="text" name="startDept" class="employee" value='<c:out value='${employee.deptName}'/>' readonly/> > 
+                    <select name="endDept" class="write_list">
 			            <option value="" >수신부서를 선택해주세요.</option>
 			            <c:forEach items="${emp}" var="emp">
 			            	<option value="${emp.deptName}">
@@ -98,7 +98,7 @@ $(document).ready(function() {
             <tr>
                 <td class="index">상신자</td>
                 <td colspan="3">
-                	<input type="text" class="employee" name="writer" value='<c:out value='${employee.name}'/>' readonly/>
+                	<input type="text" name="writer" class="employee" value='<c:out value='${employee.name}'/>' readonly/>
                 	<input type="hidden" name="writerNo" value='<c:out value='${employee.no}'/>'>
                 </td>
             </tr>
@@ -178,15 +178,15 @@ $(document).ready(function() {
 				<td colspan="4">희망 연차일수</td>
 			</tr>
 			<tr>
-				<td colspan="4"><input type="number" class="write_list" step="0.1" name="yearUseDays" class="input_yearUseDays" placeholder="희망하는 연차일수를 입력하세요." required></td>
+				<td colspan="4"><input type="number" step="0.1" name="yearUseDays" class="input_yearUseDays" placeholder="희망하는 연차일수를 입력하세요." required></td>
 			</tr>
 			<tr>
 				<td colspan="4">희망 연차일자</td>
 			</tr>
 			<tr>
 				<td colspan="4">
-					<input type="date" id="start" class="write_list" name="yearUseDateStart" data-placeholder="희망 연차 시작일을 선택하세요."> ~
-                    		<input type="date" id="end" class="write_list" name="yearUseDateEnd" data-placeholder="희망 연차 종료일을 선택하세요.">
+					<input type="date" id="start" name="yearUseDateStart" class="input_yearDate" data-placeholder="날짜 선택"> ~
+                    		<input type="date" id="end" name="yearUseDateEnd" class="input_yearDate" data-placeholder="날짜 선택">
 				</td>
 			</tr>
 			<tr>
@@ -194,15 +194,15 @@ $(document).ready(function() {
 			</tr>
 			<tr>
 				<td colspan="4" >
-					<input type="radio" id="am" name="YearAmPm" value="오전"><label for="am">오전</label>
-                   			<input type="radio" id="pm" name="YearAmPm" value="오후"><label for="pm">오후</label>
+					<input type="radio" id="am" name="YearAmPm"  value="오전"><label for="am">오전</label>
+                   	<input type="radio" id="pm" name="YearAmPm"  value="오후"><label for="pm">오후</label>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="4" >연차사유</td>
 			</tr>		
 			<tr>
-				<td colspan="4"><input type="text" class="write_list long_width" name="yearReason" placeholder="연차사유를 입력하세요." required></td>
+				<td colspan="4"><input type="text" class="input_yearReason" name="yearReason" placeholder="연차사유를 입력하세요." required></td>
 			</tr>
         </table>
         </div>

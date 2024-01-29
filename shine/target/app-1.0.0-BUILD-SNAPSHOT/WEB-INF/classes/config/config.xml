@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    
+	<typeAliases>
+		<typeAlias type="com.example.board.domain.vo.BoardVO" alias="boardVO"/>
+		<typeAlias type="com.example.board.domain.vo.BoardDTO" alias="boardDTO"/>
+		<typeAlias type="com.example.board.domain.vo.ReplyVO" alias="replyVO"/>
+		<typeAlias type="com.example.board.domain.vo.FileVO" alias="fileVO"/>
+		<typeAlias type="com.example.board.domain.vo.FileDTO" alias="fileDTO"/>
+		<typeAlias type="com.example.board.domain.vo.Calendar" alias="calendar"/>
+	</typeAliases>
+	
+	<mappers>
+       <mapper resource="mapper/CalendarMapper.xml"/>
+   </mappers>
+</configuration>

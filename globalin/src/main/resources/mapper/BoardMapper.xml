@@ -37,6 +37,7 @@
 			<![CDATA[	
 				ROWNUM <= #{pageNum} * #{amount}
 			]]>
+				ORDER BY BNO DESC
 			)
 		<![CDATA[
 			WHERE RN  > (#{pageNum} - 1) * #{amount}
@@ -53,6 +54,7 @@
 			<![CDATA[	
 				ROWNUM <= 3
 			]]>
+				ORDER BY BNO DESC
 			)
 	</select>
 	
