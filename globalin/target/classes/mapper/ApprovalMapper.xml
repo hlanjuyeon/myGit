@@ -288,6 +288,7 @@
 		where temp = '임시저장' and writerno = #{no}
 	</select>
 	
+	<!-- 미결재 count -->
 	<select id="selectInbox" resultType="com.globalin.shine.domain.approval.ApprovalVO">
     select 			
 		COUNT(*) as countInbox
@@ -301,7 +302,7 @@
 		    or (appNo3 = #{loginNo} and appState3 is null)
 			)
 	</select>
-	
+	<!-- 미결재 수신함 -->
 	<select id="getListPagingInYet" resultType="com.globalin.shine.domain.approval.ApprovalVO">
     <![CDATA[
 		select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,

@@ -36,10 +36,10 @@ $(document).ready(function() {
 		<button class="dropdown-btn"><b>근태관리</b></button>
 		<div class="dropdown-container">
 		<ul>
-			<li><b><a href="/commute/dayWork">일간근태관리</a></b></li>
-			<li><b><a href="/commute/weekWork">주간근태관리</a></b></li>
-			<li><b><a href="/commute/monthWork">월간근태관리</a></b></li>
-			<li><b><a class="year_move" href='/dayOff/read?no=<c:out value="${employee.no}"/>'>연차현황</a></b></li>
+			<li><b><a style="font-size: 17px;" href="/commute/dayWork">일간근태관리</a></b></li>
+			<li><b><a style="font-size: 17px;"  href="/commute/weekWork">주간근태관리</a></b></li>
+			<li><b><a style="font-size: 17px;"  href="/commute/monthWork">월간근태관리</a></b></li>
+			<li><b><a style="font-size: 17px;"  class="year_move" href='/dayOff/read?no=<c:out value="${employee.no}"/>'>연차현황</a></b></li>
 		</ul>
 	</div>
 	<b><a href="/calendar/list">캘린더</a></b>

@@ -7,10 +7,6 @@ button {
 	border: 2px solid #3D9970;
 	border-radius: 20px;
 	min-width: 10%;
-/* 	position: fixed; */
-	/* z-index: 1;
-	top: 11%; */
-
 	height: 600px;
 	left: 10px;
 	overflow-x: hidden;

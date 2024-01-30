@@ -38,11 +38,24 @@
 
 .commute {
 	margin-left:20px;
-	border-color:#3D9970;
+	border-color: black;
+	border-spacing: 0px;
+	margin-bottom: 20px;
 }
 
 td {
 	text-align: center;
+}
+
+.calendar {
+	width: 300px;
+    float: right;
+    margin-right: 250px;
+    margin-bottom: 20px;
+}
+
+.title {
+	margin-left : 20px;
 }
 </style>
 </head>
@@ -52,16 +65,18 @@ td {
     
 	<%@ include file="/WEB-INF/views/main/navigation.jsp" %>
 	<div class="MainContainer body_right">
-		<b style="margin-left: 20px; font-size: 24px;">주간근태관리</b>
-		<div class="calendar" align="right" style="margin-right: 10px">
+				<div>
+				<h1 class="title">주간근태관리</h1>
+				<div class="calendar">	
 			<form action="/commute/weekWork" method="get" id="weekwork">
 			<input type="week" class="calendar" id="calendar" name="calendar" value="<%=request.getParameter("calendar")%>" onchange="javascript:document.getElementById('weekwork').submit();">
 			</form>
 		</div>
+		</div>
 		<br>
 		<div class="wrapper">
 			<table class="commute" border="1" width="1100px">
-				<thead>
+				<thead style="background:#F1C93B;">
 					<tr>
 						<th class="date">날짜</th>
 						<th class="inDateTime">출근시간</th>
