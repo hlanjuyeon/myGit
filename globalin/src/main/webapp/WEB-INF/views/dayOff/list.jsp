@@ -8,12 +8,32 @@
 <title>연차관리 리스트_관리자</title>
 
 <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
-<%@ include file="/WEB-INF/views/main/header.jsp"%>
-<%@ include file="/WEB-INF/views/main/navigation.jsp"%>
+
 <style type="text/css">
+body {
+	width: 1800px;
+	height: 900px;
+}
+.body_css {
+    display: flex;
+}
+
+.header_css {
+    margin: 20px;
+    display: flex;
+    width: 1850px;
+}
+.body_right {
+    min-width: 90%;
+	height: 100%;
+}
 .MainContainer {
-	width: 1400px;
+	/* position: fixed; */
+	width: 100%;
 	height: 800px;
+	margin-left: 20px !important;
+	margin-bottom: 50px;
+	overflow: auto;
 }
 
 th{
@@ -31,8 +51,11 @@ td {
 <body>
 </head>
 <body>
-	<div class="MainContainer" align="center"
-		style="margin-left: 250px; margin-top: 15px;">
+<%@ include file="/WEB-INF/views/main/header.jsp"%>
+    <div class="body_css">
+    
+	<%@ include file="/WEB-INF/views/main/navigation.jsp" %>
+	<div class="MainContainer body_right" align="center">
 		<h1>연차 이용 현황페이지_관리자</h1>
 
 		<table class="list" border="1"  width="1350px">
@@ -68,6 +91,7 @@ td {
 			<input type="submit" value="검색" style="width: 70px; height: 50px;">
 		</form> -->
 
+	</div>
 	</div>
 </body>
 </html>

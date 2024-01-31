@@ -15,7 +15,7 @@
 			privacy,
 			color,
 			writer,
-			emp_no
+			empNo
 		FROM CALENDAR
 	</select>
 	<select id="getCalendarByNo" resultType="java.util.HashMap" parameterType="int">
@@ -32,17 +32,14 @@
 			privacy,
 			color,
 			writer,
-			emp_no
+			empNo
 		FROM CALENDAR
 		WHERE no = #{no}
 	</select>
-	<insert id="insert"><!-- 
+	<insert id="insert">
         INSERT INTO calendar 
-        	(title, startday, endday, allday, content, location, attendee, repeat, privacy, color, emp_no)
-        VALUES (#{title}, #{startday}, #{endday}, #{allday}, #{content}, #{location}, #{attendee}, #{repeat}, #{privacy}, #{color}, #{emp_no}) -->
-        INSERT INTO calendar 
-        	(title, location, attendee, startday, endday, content, color, allday , privacy, writer)
-        VALUES (#{title}, #{location}, #{attendee}, #{startday}, #{endday}, #{content}, #{color}, #{allday}, #{privacy}, #{writer})
+        	(title, location, attendee, startday, endday, content, color, allday , privacy, writer, empNo)
+        VALUES (#{title}, #{location}, #{attendee}, #{startday}, #{endday}, #{content}, #{color}, #{allday}, #{privacy}, #{writer}, #{empNo})
     </insert>
     <delete id="delete" parameterType="int">
     	DELETE FROM CALENDAR WHERE no = #{no}

@@ -29,7 +29,7 @@ public class DayOffController {
 
 	@GetMapping("/read")
 	public void readList(int no, Model model, HttpServletRequest request) {
-		log.info("/read : " + no );
+		log.info("/read");
 		HttpSession session = request.getSession();
 		model.addAttribute("id", employeeService.getVOById((String) session.getAttribute("id")).getId());
 		model.addAttribute("no", employeeService.getVOById((String) session.getAttribute("id")).getNo());

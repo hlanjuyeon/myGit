@@ -83,6 +83,7 @@ $(document).ready(function() {
             <p class="payment_date">수정일시</p>
         </div>
         <c:forEach items="${temp}" var="item"> 
+        <div class="a_move">
             <a class="move" href='<c:out value="${item.no}"/>'>
 	        	<div class="list_item">
 		            <p class="no"><c:out value="${item.no}"/></p>
@@ -97,6 +98,7 @@ $(document).ready(function() {
 		            <p class="payment_date"><c:out value="${item.updateDay}"/></p>
 	            </div>
             </a>
+            </div>
         </c:forEach>
     </div>
 </div>

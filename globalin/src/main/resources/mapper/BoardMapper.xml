@@ -44,20 +44,35 @@
 		]]>
 	</select>
 	
-	<select id="getListMain" resultType="boardVO">
+<!-- 	<select id="getListMain" resultType="boardVO">
 			SELECT BNO, TITLE, CONTENT, DEPTNAME, NAME, REGDATE, UPDATEDATE 
 			FROM
 			(
 				SELECT /*+ INDEX_DESC(TBL_BOARD, PK_BD)*/ 
 				ROWNUM RN, BNO, TITLE, CONTENT, DEPTNAME, NAME, REGDATE, UPDATEDATE
-				FROM TBL_BOARD WHERE 
+				FROM TBL_BOARD 
 			<![CDATA[	
-				ROWNUM <= 3
+				WHERE ROWNUM <= 3
 			]]>
 				ORDER BY BNO DESC
 			)
-	</select>
+	</select> -->
 	
+	<select id="getListMain" resultType="boardVO">
+	SELECT BNO, TITLE, CONTENT, DEPTNAME, NAME, REGDATE, UPDATEDATE 
+		FROM (
+			SELECT /*+ INDEX_DESC(TBL_BOARD, PK_BD)*/ 
+			BNO, TITLE, CONTENT, DEPTNAME, NAME, REGDATE, UPDATEDATE,
+				ROW_NUMBER() OVER (ORDER BY BNO DESC) AS RN,
+				COUNT(*) OVER () AS TOTAL_COUNT
+			FROM TBL_BOARD
+		)
+		<![CDATA[	
+		WHERE RN <= (SELECT CASE WHEN TOTAL_COUNT >= 3 THEN 3 ELSE TOTAL_COUNT END FROM DUAL)
+		]]>
+		ORDER BY BNO DESC
+	</select>
+
 	<insert id="insert">
 		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
 			SELECT SEQ_BOARD.NEXTVAL FROM DUAL

@@ -18,7 +18,7 @@
 	<!-- 개인 정보조회 -->
 	<select id="readInfo" resultType="dayOffVO">
 	SELECT Employee.name, dayOffinfo.no, dayOffinfo.Total, dayOffinfo.Remind, dayOffinfo.UsedTotal
-    FROM Employee inner join dayOffinfo ON Employee.no = dayOffinfo.no where Employee.no =#{no}
+    FROM Employee inner join dayOffinfo ON Employee.no = dayOffinfo.no where Employee.no = #{no}
 	</select>
 	
 	<!-- 개인 사용내역 조회 -->

@@ -99,7 +99,7 @@ height: 150px;
 			<div class="main">
 				<table border="0" cellspacing="0" cellpadding="0" class="formContainer" width="950px">
 					<tr>
-						<th rowspan="4"><img src="/resources/photos/${employee.photo }" alt="Profile"/></th>
+						<th rowspan="4"><img src="/resources/photos/${employee.photo}" alt="Profile"/></th>
 					</tr>
 					<tr>
 						<td class="column">이름</td>

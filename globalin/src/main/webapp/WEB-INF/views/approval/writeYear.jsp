@@ -185,8 +185,8 @@ $(document).ready(function() {
 			</tr>
 			<tr>
 				<td colspan="4">
-					<input type="date" id="start" name="yearUseDateStart" class="input_yearDate" data-placeholder="날짜 선택"> ~
-                    		<input type="date" id="end" name="yearUseDateEnd" class="input_yearDate" data-placeholder="날짜 선택">
+					<input type="date" id="start" name="yearUseDateStart" class="input_yearDate"> ~
+                    		<input type="date" id="end" name="yearUseDateEnd" class="input_yearDate">
 				</td>
 			</tr>
 			<tr>

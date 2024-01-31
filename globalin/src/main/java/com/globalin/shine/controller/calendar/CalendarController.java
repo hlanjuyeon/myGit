@@ -114,48 +114,53 @@ public class CalendarController {
 	
 
 	@GetMapping("/list")
-	public String list() {
-		log.info("/main");
-		return "/calendar/main";
+	public void list(Model model, HttpServletRequest request) {
+		log.info("캘린더로 이동하기");
+		HttpSession session = request.getSession();
+		model.addAttribute("no", employeeService.getVOById((String) session.getAttribute("id")).getNo());
 	}
 	
 	@GetMapping("/edit")
-	public String edit() {
+	public void edit(Model model, HttpServletRequest request) {
 	    log.info("/edit");
-	    return "/calendar/edit";
+	    HttpSession session = request.getSession();
+		model.addAttribute("no", employeeService.getVOById((String) session.getAttribute("id")).getNo());
 	}
 	
 	@GetMapping("/add")
-	public String add(Model model, HttpServletRequest request) {
+	public void add(Model model, HttpServletRequest request) {
 		log.info("/add");
 		HttpSession session = request.getSession();
-		model.addAttribute("name", employeeService.getVOById((String) session.getAttribute("id")).getName());
-		return "/calendar/add";
+		model.addAttribute("no", employeeService.getVOById((String) session.getAttribute("id")).getNo());
 	}
 	
 	@GetMapping("/delete")
-	public String eventDeleteGet(@RequestParam("no") int no) {
-		calendarService.delete(no);
+	public String eventDeleteGet(@RequestParam("no") int no, Model model, HttpServletRequest request) {
 		log.info("/delete");
-		return "redirect:/calendar/list";
+		HttpSession session = request.getSession();
+		model.addAttribute("no", employeeService.getVOById((String) session.getAttribute("id")).getNo());
+		calendarService.delete(no);
+		return "redirect:/calendar/list?loginNo=" + model.asMap().get("no");
 	}
 	
 	@GetMapping("/insert")
-	public String evenetInsertGet(CalendarVO calendar) {
+	public String evenetInsertGet(CalendarVO calendar, Model model, HttpServletRequest request) {
 		log.info("/insert");
-		log.info("CalendarVO : " + calendar);
-		
+		HttpSession session = request.getSession();
+		model.addAttribute("no", employeeService.getVOById((String) session.getAttribute("id")).getNo());
 		calendarService.insert(calendar);
-		return "redirect:/calendar/list";
+		log.info("CalendarVO : " + calendar);
+		return "redirect:/calendar/list?loginNo=" + model.asMap().get("no");
 	}
 	
 	@GetMapping("/update")
-	public String evenetUpdateGet(CalendarVO calendar) {
+	public String evenetUpdateGet(CalendarVO calendar, Model model, HttpServletRequest request) {
 		log.info("/update");
-		log.info("CalendarVO : " + calendar);
-		
+		HttpSession session = request.getSession();
+		model.addAttribute("no", employeeService.getVOById((String) session.getAttribute("id")).getNo());		
 		calendarService.update(calendar);
-		return "redirect:/calendar/list";
+		log.info("CalendarVO : " + calendar);
+		return "redirect:/calendar/list?loginNo=" + model.asMap().get("no");
 	}
 
 }

@@ -305,3 +305,10 @@ input[type='date']:valid::before {
 	display: inline-block;
 	float: right;
 }
+
+.input_writer {
+	font-size: 18px;
+    border: none;
+    width: 60px;
+	padding-left: 10px;
+}

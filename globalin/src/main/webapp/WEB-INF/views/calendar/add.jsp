@@ -131,8 +131,9 @@ $(function() {
                 </div>
                 <div class="add-footer">
                     <input type="submit" class="btn" id="addCalendar" value="추가">
-                    <input type="button" class="btn" id="close-add" value="닫기" onclick="location.href='/calendar/list'">
+                    <input type="button" class="btn" id="close-add" value="닫기" onclick="redirectToCalendar()">
                 </div>
+                <input type="hidden" name="empNo" value='<c:out value='${employee.no}'/>'>
             </form>
         </div>
     </div>
@@ -210,6 +211,12 @@ $(function() {
 				privacy_btn.classList.remove('on');	
 			}
 		});
+		
+		function redirectToCalendar() {
+	        var loginNo = '<c:out value="${employee.no}"/>';
+	        var url = '/calendar/list?loginNo=' + loginNo;
+	        location.href = url;
+	    }
 	</script>
 </body>
 </html>

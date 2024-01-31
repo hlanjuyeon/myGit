@@ -291,7 +291,7 @@ public class EmployeeController {
 		MultipartFile file = ((MultipartHttpServletRequest)request).getFile("photoFile");
 		
 		// 사진을 저장할 위치
-		String uploadPath = "C:\\spring_workspace\\calendar2\\src\\main\\webapp\\resources\\photos\\";
+		String uploadPath = "C:\\upload\\";
 		
 		// 그 위치에 폴더가 있는지 확인하고, 없으면 생성
 		File folder = new File(uploadPath);

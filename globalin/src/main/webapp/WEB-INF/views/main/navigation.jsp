@@ -39,10 +39,10 @@ $(document).ready(function() {
 			<li><b><a style="font-size: 17px;" href="/commute/dayWork">일간근태관리</a></b></li>
 			<li><b><a style="font-size: 17px;"  href="/commute/weekWork">주간근태관리</a></b></li>
 			<li><b><a style="font-size: 17px;"  href="/commute/monthWork">월간근태관리</a></b></li>
-			<li><b><a style="font-size: 17px;"  class="year_move" href='/dayOff/read?no=<c:out value="${employee.no}"/>'>연차현황</a></b></li>
+			<li><b><a style="font-size: 17px;"  class="year_move" href='/dayOff/read?loginNo=<c:out value="${employee.no}"/>'>연차현황</a></b></li>
 		</ul>
 	</div>
-	<b><a href="/calendar/list">캘린더</a></b>
+	<b><a href="/calendar/list?loginNo=<c:out value="${employee.no}"/>">캘린더</a></b>
 	<b><a href='/approval/listIn?loginNo=<c:out value="${employee.no}"/>'>전자결재</a></b>
 	<b><a href="/board/notice">공지사항</a></b>
 	<b><a href="/orgchart/employeeInfo">조직도</a></b>

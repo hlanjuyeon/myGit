@@ -19,5 +19,5 @@ public class CalendarVO{
 	private String privacy;
 	private	String color;
 	private String writer;
-	private String emp_no;
+	private String empNo;
 }
