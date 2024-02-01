@@ -99,7 +99,6 @@ height: 100%;
 	text-align: center;
 	cursor: pointer;
 	outline: none;
-	background-color: #f0f0f0;
 }
     </style>
 </head>

@@ -46,7 +46,7 @@ if (exampleModal) {
               <input type="email" class="form-control" id="recipient-name">
             </div>
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">받는사람</label>
+              <label for="recipient-name" class="col-form-label">받는사람</label>
               <input type="email" class="form-control" id="recipient-name">
             </div>
             <div class="mb-3">

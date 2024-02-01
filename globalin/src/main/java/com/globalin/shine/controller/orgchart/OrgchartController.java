@@ -44,6 +44,11 @@ public class OrgchartController {
         return "/orgchart/employee_detail";
     }
     
+    @GetMapping("/email")
+    public String emailGet() {
+    	return "/orgchart/email";
+    }
+    
 //	  @GetMapping("/testlogin")
 //	    public String testLogin(HttpSession session) {
 //	        Orgchart employee = new Orgchart();

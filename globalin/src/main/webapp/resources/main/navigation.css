@@ -27,6 +27,19 @@ button {
 	outline: none;
 }
 
+.sidenav button {
+	padding: 10px 0 10px 0;
+	text-decoration: none;
+	font-size: 20px;
+	display: block;
+	border: none;
+	text-align: center;
+	cursor: pointer !important;
+	outline: none;
+	width: 100%;
+    border-radius: 0;
+}
+
 .dropdown-btn {
 	padding: 10px 0 10px 0;
 	text-decoration: none;
@@ -40,9 +53,15 @@ button {
 }
 
 .sidenav a:hover, .dropdown-btn:hover {
-	transition-duration: 0.3s;
-	background-color: #3D9970;
-	color: white;
+	transition-duration: 0.3s !important;
+	background-color: #3D9970 !important;
+	color: white !important;
+}
+
+.sidenav button:hover {
+	transition-duration: 0.3s !important;
+	background-color: #3D9970 !important;
+	color: white !important;
 }
 
 .active {
