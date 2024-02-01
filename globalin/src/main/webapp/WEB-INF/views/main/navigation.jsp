@@ -27,6 +27,16 @@ $(document).ready(function() {
 			document.querySelector(".mypage_move").href = "/shineInfo/myPage_admin";
 		}
 	});
+	
+	var links = document.getElementsByTagName("a");
+	for (var j = 0; j < links.length; j++) {
+	  links[j].addEventListener("click", function () {
+	    for (var k = 0; k < links.length; k++) {
+	      links[k].classList.remove("visited");
+	    }
+	    this.classList.add("visited");
+	  });
+	}
 });
 </script>
 </head>
@@ -39,7 +49,7 @@ $(document).ready(function() {
 			<li><b><a style="font-size: 17px;" href="/commute/dayWork">일간근태관리</a></b></li>
 			<li><b><a style="font-size: 17px;"  href="/commute/weekWork">주간근태관리</a></b></li>
 			<li><b><a style="font-size: 17px;"  href="/commute/monthWork">월간근태관리</a></b></li>
-			<li><b><a style="font-size: 17px;"  class="year_move" href='/dayOff/read?loginNo=<c:out value="${employee.no}"/>'>연차현황</a></b></li>
+			<li><b><a style="font-size: 17px;"  class="year_move" href='/dayOff/read?=<c:out value="${employee.no}"/>'>연차현황</a></b></li>
 		</ul>
 	</div>
 	<b><a href="/calendar/list?loginNo=<c:out value="${employee.no}"/>">캘린더</a></b>

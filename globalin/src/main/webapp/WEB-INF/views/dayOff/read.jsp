@@ -134,6 +134,7 @@ th {
 		    <thead style="position: sticky; top: 0;">
 		        <tr>
 		            <th width="300">연차종류(반차/연차)</th>
+		            <th width="200">반차 시간대</th>
 		            <th width="600">연차사용기간</th>
 		            <th width="500">연차사유</th>
 		        </tr>
@@ -144,6 +145,7 @@ th {
 		                <td><c:out value="${dayOffList.yearUseDays}" /> 일 
 		                    <c:out value="${dayOffList.yearUseDays == 0.5 ? '(반차)' : '(연차)'}" escapeXml="false" />
 		                </td>
+		                <td>${dayOffList.yearAmPm}</td> 
 		                <td><c:out value="${dayOffList.yearUseDateStart}" /> ~ <c:out value="${dayOffList.yearUseDateEnd}" /> </td>
 		                <td><c:out value="${dayOffList.yearReason}" /></td>
 		            </tr>

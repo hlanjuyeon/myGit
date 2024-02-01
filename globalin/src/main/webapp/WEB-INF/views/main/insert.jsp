@@ -146,14 +146,30 @@ input[type='password'] {
 }
 
 .selector {
-	background-color: white;
+background-color: white;
 	border: 2px solid #3D9970;
 	border-radius: 15px;
-	width: 220px;
+	padding: 5px 10px;
+	font-size: 16px;
+	width: 200px;
 	margin-left: 15px;
 	margin-top:5px;
 	margin-bottom:5px;
 }
+
+.selector_radio {
+background-color: white;
+	border: 2px solid #3D9970;
+	border-radius: 15px;
+	padding: 5px 10px;
+	font-size: 16px;
+	margin-left: 15px;
+	margin-top:5px;
+	margin-bottom:5px;
+	width: 150px;
+    text-align: center;
+}
+
 .id-check {
 	display: inline-block;
 	color: #aaa;
@@ -183,6 +199,23 @@ input[type='password'] {
 			<div class="main">
 	<form action="insert" method="post" class="formClass" enctype="multipart/form-data">
 			<table border="0" cellspacing="0" cellpadding="0" class="formContainer" width="1000px">
+			<tr>
+				<td><b>이름</b></td> 
+				<td><input type="text" width="200px" id="name" name="name"></td>
+			</tr>
+			<tr>
+				<td><b>생년월일</b></td>
+				<td><input type="date" width="200px" id="birth" name="birth"></td>
+			</tr>
+			<tr>
+				<td><b>성별</b>
+				<td>
+					<div  class = "selector_radio">
+					<input type="radio" name="gender" value="남성">남성
+					<input type="radio" name="gender" value="여성">여성
+					</div>
+				</td>
+			</tr>
 			<tr>
 				<td><b>아이디</b></td> 
 				<td>
@@ -218,45 +251,28 @@ input[type='password'] {
 				</td>
 			</tr>
 			<tr>
-				<td><b>이름</b></td> 
-				<td><input type="text" width="200px" id="name" name="name"></td>
-			</tr>
-			<tr>
-				<td><b>직책</b></td>
-				<td><input type="text" width="200px" id="position" name="position"></td>
-			</tr>
-			<tr>
-				<td><b>전화번호</b>
-				<td><input type="text" width="200px" id="phone" name="phone"></td>
-			</tr>
-			<tr>
-				<td><b>사내전화</b>
-				<td><input type="text" width="200px" id="call" name="call"></td>
-			</tr>
-			<tr>
-				<td><b>이메일</b>
-				<td><input type="text" width="200px" id="email" name="email"></td>
-			</tr>
-			<tr>
-				<td><b>성별</b>
-				<td>
-					<select name="gender" id="gender" class="selector" name="gender">
-						<option value="남성">남성</option>
-						<option value="여성">여성</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td><b>생년월일</b></td>
-				<td><input type="text" width="200px" id="birth" name="birth"></td>
-			</tr>
-			<tr>
 				<td><b>부서이름</b></td>
 				<td><input type="text" width="200px" id="deptName" name="deptName"></td>
 			</tr>
 			<tr>
 				<td><b>부서번호</b></td>
 				<td><input type="number" width="200px" id="deptNo" name="deptNo"></td>
+			</tr>
+			<tr>
+				<td><b>직급</b></td>
+				<td><input type="text" width="200px" id="position" name="position"></td>
+			</tr>
+			<tr>
+				<td><b>사내전화번호</b>
+				<td><input type="text" width="200px" id="phone" name="phone"></td>
+			</tr>
+			<tr>
+				<td><b>개인전화전화</b>
+				<td><input type="text" width="200px" id="call" name="call"></td>
+			</tr>
+			<tr>
+				<td><b>이메일</b>
+				<td><input type="text" width="200px" id="email" name="email"></td>
 			</tr>
 			<tr>
 				<td><b>입사일자</b></td>

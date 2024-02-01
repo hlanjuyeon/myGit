@@ -135,11 +135,11 @@ public class CalendarController {
 	}
 	
 	@GetMapping("/delete")
-	public String eventDeleteGet(@RequestParam("no") int no, Model model, HttpServletRequest request) {
+	public String eventDeleteGet(int no, Model model, HttpServletRequest request) {
 		log.info("/delete");
+		calendarService.delete(no);
 		HttpSession session = request.getSession();
 		model.addAttribute("no", employeeService.getVOById((String) session.getAttribute("id")).getNo());
-		calendarService.delete(no);
 		return "redirect:/calendar/list?loginNo=" + model.asMap().get("no");
 	}
 	

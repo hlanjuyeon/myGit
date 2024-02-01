@@ -541,11 +541,6 @@ a {
     font-size: 17px;
 }
 
-input[type='date']::before {
-  content: attr(data-placeholder);
-  width: 100%;
-}
-
 .input_yearUseDays,
 .input_yearReason {
 	width: 400px;

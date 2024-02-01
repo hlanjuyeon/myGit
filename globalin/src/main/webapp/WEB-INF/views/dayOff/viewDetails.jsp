@@ -8,16 +8,31 @@
 <title>연차 상세보기_관리자</title>
 
 <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
-<%@ include file="/WEB-INF/views/main/header.jsp"%>
-<%@ include file="/WEB-INF/views/main/navigation.jsp"%>
 <style type="text/css">
-.MainContainer {
-	width: 1200px;
-	height: 800px;
-	margin-left: 300px;
-	margin-top: 10px;
+body {
+	width: 1800px;
+	height: 900px;
+}
+.body_css {
+    display: flex;
 }
 
+.header_css {
+    margin: 20px;
+    display: flex;
+    width: 1850px;
+}
+.body_right {
+    min-width: 90%;
+height: 100%;
+}
+.MainContainer {
+	/* position: fixed; */
+	width: 100%;
+	height: 800px;
+	margin-left: 20px;
+	margin-bottom: 50px;
+}
 .name {
 	font-size: 25px;
 	padding: 10px;
@@ -63,8 +78,11 @@ th {
 
 </head>
 <body>
-
-	<div class="MainContainer" align="center">
+<%@ include file="/WEB-INF/views/main/header.jsp"%>
+    <div class="body_css">
+    
+	<%@ include file="/WEB-INF/views/main/navigation.jsp" %>
+	<div class="MainContainer body_right" align="center">
 
 		<h1>연차이용 현황페이지</h1>
 
@@ -107,6 +125,7 @@ th {
 				<thead>
 					<tr>
 					<th width="300">연차종류(반차/연차)</th>
+					<th width="200">반차 시간대</th>
 					<th width="600">연차사용기간</th>
 					<th width="500">연차사유</th>
 				</tr>
@@ -115,7 +134,8 @@ th {
 			<tbody>
 			<c:forEach var="dayOffList" items="${dayOffList}"> 
 					<tr>
-						<td>${dayOffList.yearUseDays} 일 (${dayOffList.yearUseDays > 0.5 ? '연차' : '반차-dayOffList.yearAmPm'})</td>
+						<td>${dayOffList.yearUseDays} 일 (${dayOffList.yearUseDays > 0.5 ? '연차' : '반차 '})</td>
+						<td>${dayOffList.yearAmPm}</td> 
 						<td>${dayOffList.yearUseDateStart} ~ ${dayOffList.yearUseDateEnd} </td>						
 						<td>${dayOffList.yearReason}</td> 
 					</tr>
@@ -131,6 +151,7 @@ th {
 			<input type="button" class="viewDetails" value="사원목록 보기" onclick="location.href='/dayOff/list'"/>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="button" class="viewDetails" value="수정 하러 가기" onclick="location.href='/dayOff/modify?no=${dayOffInfo.no}'"/>
+	</div>
 	</div>
 </body>
 </html>

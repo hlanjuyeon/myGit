@@ -35,6 +35,7 @@ body {
 	margin-left: 20px;
 	margin-bottom: 50px;
 }
+
 th {
 	background-color: #3D9970;
 	color: white;
@@ -45,7 +46,7 @@ th {
 td {
 	width: 150px;
 	padding-left: 50px;
-	font-size: 19px;
+	font-size: 20px;
 }
 
 .update_admin{
@@ -71,13 +72,13 @@ margin-right: 200px;
 				</tr>
 				<tr>
 					<th>생년월일</th>
-					<td><input type="date" id="birth" name="birth"></td>
+					<td><input type="date" style="width: 173px;" id="birth" name="birth" value="${shineInfo.birth}"></td><br><br>
 				</tr>
 				<tr>
 					<th>성별</th>
 					<td>
-					   <input type="radio" name="gender" value="남자">남자
-					   <input type="radio" name="gender" value="여자">여자
+						<input type="radio" name="gender" value="남성" ${shineInfo.gender eq '남성' ? 'checked' : ''}>남성
+						<input type="radio" name="gender" value="여성" ${shineInfo.gender eq '여성' ? 'checked' : ''}>여성
 					</td>
 				</tr>
 
@@ -87,49 +88,37 @@ margin-right: 200px;
 				</tr>
 				<tr>
 					<th>비밀번호</th>
-					<td><input type="password" id="password" name="pw"></td>
+					<td><input type="password" id="password" name="pw" placeholder="${shineInfo.pw}"></td>
 				</tr>
 				<tr>
 					<th>비밀번호 확인</th>
-					<td><input type="password" id="password-retype"></td>
+					<td><input type="password" id="password-retype" placeholder="${shineInfo.pw}"></td>
 				</tr>
 <%-- 				<tr>
 					<th>사원번호</th>
 					<td><input type="number" id="no" placeholder="${shineInfo.no}"></td>
 				</tr> --%>
 				<tr>
-					<th>직급</th>
-					<td>
-					   <input type="radio" name="position" value="사원">사원
-					   <input type="radio" name="position" value="주임">주임
-					   <input type="radio" name="position" value="과장">과장
-					   <input type="radio" name="position" value="부장">부장
-					   <input type="radio" name="position" value="사장">사장
-					</td>
-				</tr>
-				<tr>
 					<th>부서명</th>
-					<td>
-					   <input type="radio" name="deptName" value="인사">인사
-					   <input type="radio" name="deptName" value="총무">총무
-					   <input type="radio" name="deptName" value="회계">회계
-					   <input type="radio" name="deptName" value="마케팅">마케팅
-					   <input type="radio" name="deptName" value="영업1">영업1
-					</td>
+					<td><input type="text" id="deptName" name="deptName" placeholder="${shineInfo.deptName}"></td>
 				</tr>
 				<tr>
 					<th>부서번호</th>
+					<td><input type="number" id="deptNo" name="deptNo" placeholder="${shineInfo.deptNo}"></td>
+				</tr>
+				<tr>
+					<th>직급</th>
 					<td>
-					  <input type="number">
+					   <input type="text" width="200px" id="position" name="position" placeholder="${shineInfo.position}">
 					</td>
 				</tr>
 				<tr>
 					<th>사내전화번호</th>
-					<td><input type="text" id="call" placeholder="${shineInfo.call}" name="call"></td>
+					<td><input type="text" id="phone" placeholder="${shineInfo.phone}" name="phone"></td>
 				</tr>
 				<tr>
 					<th>개인전화번호</th>
-					<td><input type="text" id="phone" placeholder="${shineInfo.phone}" name="phone"></td>
+					<td><input type="text" id="call" placeholder="${shineInfo.call}" name="call"></td>
 				</tr>
 				<tr>
 					<th>이메일</th>
@@ -137,18 +126,21 @@ margin-right: 200px;
 				</tr>
 				<tr>
 					<th>입사일자</th>
-					<td><input type="date" id="hireDate" placeholder="${shineInfo.hireDate}" name="hireDate"></td>
+					<td><input type="date" style="width: 173px;" id="hireDate" value="${shineInfo.hireDate}" name="hireDate"></td>
 				</tr>
 				<tr>
 					<th>퇴사일자</th>
-					<td><input type="date" id="exitDate" placeholder="${shineInfo.exitDate}" name="exitDate"></td>
+					<td><input type="date" style="width: 173px;" id="exitDate" value="${shineInfo.exitDate}" name="exitDate"></td>
 				</tr>
 				<tr>
-					<th>재직현황</th>
+					<th>재직상태</th>
 					<td>
-					   <input type="radio" name="status" value="재직">재직
-					   <input type="radio" name="status" value="휴직">휴직
-					   <input type="radio" name="status" value="퇴사">퇴사
+					   <select name="status" id="status" style="width: 180px;" class="selector" name="status">
+						<option value="재직" ${shineInfo.status eq '재직' ? 'selected' : ''}>재직</option>w
+						<option value="휴직" ${shineInfo.status eq '휴직' ? 'selected' : ''}>휴직</option>
+						<option value="정직" ${shineInfo.status eq '정직' ? 'selected' : ''}>정직</option>
+						<option value="퇴사" ${shineInfo.status eq '퇴사' ? 'selected' : ''}>퇴사</option>
+					</select>
 					</td>
 				</tr>
 

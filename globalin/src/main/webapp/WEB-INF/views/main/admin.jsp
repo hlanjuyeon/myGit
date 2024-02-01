@@ -235,11 +235,11 @@ body {
 		}
 		
 		function clickUpdate() {
-			window.location.href="update";
+			window.location.href="shineInfo/myPage_admin";
 		}
 		
 		function clickdayOff(){
-			window.location.href="dayOff";
+			window.location.href="dayOff/list";
 		}
 	</script>
 

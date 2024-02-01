@@ -55,7 +55,7 @@ td {
     
 	<%@ include file="/WEB-INF/views/main/navigation.jsp" %>
 		<div class="MainContaine body_right" align="center">
-		<h1>마이페이지_관리자</h1>
+		<h1>전체 사원 정보</h1>
 
 		<table border="1" width="1350">
 			<tr>
