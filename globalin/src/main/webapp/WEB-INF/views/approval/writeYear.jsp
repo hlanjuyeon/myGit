@@ -33,7 +33,10 @@
 height: 100%;
 }
 
-
+.approval_move {
+	background-color: #3D9970;
+	color: white !important;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -190,12 +193,13 @@ $(document).ready(function() {
 				</td>
 			</tr>
 			<tr>
-				<td colspan="4">희망 반차시간대</td>
+				<td colspan="4">희망 연차시간대</td>
 			</tr>
 			<tr>
 				<td colspan="4" >
 					<input type="radio" id="am" name="YearAmPm"  value="오전"><label for="am">오전</label>
                    	<input type="radio" id="pm" name="YearAmPm"  value="오후"><label for="pm">오후</label>
+                   	<input type="radio" id="allday" name="YearAmPm"  value="종일"><label for="allday">종일</label>
 				</td>
 			</tr>
 			<tr>

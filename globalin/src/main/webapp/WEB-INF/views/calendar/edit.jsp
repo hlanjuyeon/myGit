@@ -10,6 +10,12 @@
 
 <link href='/resources/fullcalendar/add.css' rel='stylesheet' />
 <title>일정편집</title>
+<style type="text/css">
+.calendar_move {
+	background-color: #3D9970;
+	color: white !important;
+}
+</style>
 </head>
 <body>
 <script type="text/javascript">

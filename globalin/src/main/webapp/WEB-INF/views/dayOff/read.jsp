@@ -83,8 +83,11 @@ th {
 	border-radius: 15px;
 }
 
+.year_move {
+	background-color: #3D9970;
+	color: white !important;
+}
 </style>
-
 </head>
 <body>
 <%@ include file="/WEB-INF/views/main/header.jsp"%>
@@ -142,7 +145,8 @@ th {
 		    <tbody>
 		        <c:forEach var="dayOffList" items="${dayOffList}">
 		            <tr>
-		                <td><c:out value="${dayOffList.yearUseDays}" /> 일 
+		                <td>
+		                	<c:out value="${dayOffList.yearUseDays}" /> 일 
 		                    <c:out value="${dayOffList.yearUseDays == 0.5 ? '(반차)' : '(연차)'}" escapeXml="false" />
 		                </td>
 		                <td>${dayOffList.yearAmPm}</td> 

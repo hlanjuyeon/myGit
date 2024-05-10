@@ -8,8 +8,6 @@
 <link rel="stylesheet" type="text/css" href="/resources/main/navigation.css">
 <link rel="stylesheet" type="text/css" href="/resources/main/darkmode.css">
 <link rel="stylesheet" type="text/css" href="/resources/main/style.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$(".year_move").on("click", function(e){
@@ -67,60 +65,20 @@ $(document).ready(function() {
 		<button class="dropdown-btn"><b>근태관리</b></button>
 		<div class="dropdown-container">
 		<ul>
-			<li><b><a style="font-size: 17px;" href="/commute/dayWork">일간근태관리</a></b></li>
-			<li><b><a style="font-size: 17px;"  href="/commute/weekWork">주간근태관리</a></b></li>
-			<li><b><a style="font-size: 17px;"  href="/commute/monthWork">월간근태관리</a></b></li>
-			<li><b><a style="font-size: 17px;"  class="year_move" href='/dayOff/read?=<c:out value="${employee.no}"/>'>연차현황</a></b></li>
+			<li><b><a style="font-size: 17px;" class="dayWork_move" href="/commute/dayWork">일간근태관리</a></b></li>
+			<li><b><a style="font-size: 17px;" class="weekWork_move" href="/commute/weekWork">주간근태관리</a></b></li>
+			<li><b><a style="font-size: 17px;" class="monthWork_move" href="/commute/monthWork">월간근태관리</a></b></li>
+			<li><b><a style="font-size: 17px;" class="year_move" href='/dayOff/read?no=<c:out value="${employee.no}"/>'>연차현황</a></b></li>
 		</ul>
 		</div>
-	<b><a href="/calendar/list?loginNo=<c:out value="${employee.no}"/>">캘린더</a></b>
-	<b><a href='/approval/listIn?loginNo=<c:out value="${employee.no}"/>'>전자결재</a></b>
-	<b><a href="/board/notice">공지사항</a></b>
-	<b><a href="/orgchart/employeeInfo">조직도</a></b>
-	<button type="button" style="color: #3D9970;" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"><b>이메일</b></button>
+	<b><a class="calendar_move" href="/calendar/list?loginNo=<c:out value="${employee.no}"/>">캘린더</a></b>
+	<b><a class="approval_move" href='/approval/listIn?loginNo=<c:out value="${employee.no}"/>'>전자결재</a></b>
+	<b><a class="board_move" href="/board/notice">공지사항</a></b>
+	<b><a class="orgchart_move" href="/orgchart/employeeInfo">조직도</a></b>
 	<div class="darkmode_div">
 		<b>다크모드</b><input role="switch" type="checkbox" class="darkmode" onclick="darkMode()">
 	</div>
 	</div>
-	
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Email</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">보내는사람</label>
-              <input type="email" class="form-control" id="recipient-name">
-            </div>
-            <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">받는사람</label>
-              <input type="email" class="form-control" id="recipient-name">
-            </div>
-            <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">제목</label>
-              <input type="text" class="form-control" id="recipient-name">
-            </div>
-            <div class="mb-3">
-              <label for="message-text" class="col-form-label">내용</label>
-              <textarea class="form-control" id="message-text"></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">첨부파일</label>
-              <input type="file" class="form-control" id="recipient-name">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Send message</button>
-        </div>
-      </div>
-    </div>
-  </div>
 	<script type="text/javascript" src="/resources/main/darkmode.js"></script>
 	<script>
 	// dropdown script

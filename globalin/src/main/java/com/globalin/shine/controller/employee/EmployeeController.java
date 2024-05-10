@@ -185,6 +185,8 @@ public class EmployeeController {
 		model.addAttribute("inbox", approvalService.selectInbox(no));
 		model.addAttribute("boardList", boardService.getListMain(criteria));
 		model.addAttribute("pageDTO", new PageDTO(boardService.getTotal(criteria), criteria));
+		model.addAttribute("email", employeeService.getVOById((String) session.getAttribute("id")).getEmail());
+		model.addAttribute("user", approvalService.getUserList());
 		return mav;
 	}
 

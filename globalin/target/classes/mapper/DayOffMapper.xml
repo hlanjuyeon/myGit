@@ -15,17 +15,22 @@
     ]]>
     </select> -->
 	
-	<!-- 개인 정보조회 -->
+	<!-- 개인 정보조회 
 	<select id="readInfo" resultType="dayOffVO">
 	SELECT Employee.name, dayOffinfo.no, dayOffinfo.Total, dayOffinfo.Remind, dayOffinfo.UsedTotal
     FROM Employee inner join dayOffinfo ON Employee.no = dayOffinfo.no where Employee.no = #{no}
+	</select> -->
+	
+	<select id="readInfo" resultType="dayOffVO">
+	SELECT Employee.name, dayOffinfo.no, dayOffinfo.Total, dayOffinfo.Remind, dayOffinfo.UsedTotal
+    FROM Employee inner join dayOffinfo ON Employee.no = dayOffinfo.no where Employee.no = #{loginNo}
 	</select>
 	
 	<!-- 개인 사용내역 조회 -->
 	<select id="readList" resultType="com.globalin.shine.domain.approval.ApprovalVO">
-    select yearUseDays, yearUseDateStart, yearUseDateEnd, yearAmPm, yearReason, writerNo
+    select yearUseDays, yearUseDateStart, yearUseDateEnd, yearAmPm, yearReason, writerNo, temp
     from approval
-    where writerNo = #{loginNo}
+	where writerNo = #{loginNo} and temp = '상신'  and form = '연차'
 	</select>
 	
 	<!-- 관리자 전체 리스트 조회 -->

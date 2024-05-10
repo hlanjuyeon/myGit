@@ -86,6 +86,11 @@ body {
     display: flex;
         width: 1850px;
 }
+
+.approval_move {
+	background-color: #3D9970;
+	color: white !important;
+}
 </style>
 </head>
 <body>
@@ -101,7 +106,7 @@ body {
             <p class="writer">작성자</p>
             <p class="write_date">작성일시</p>
             <p class="payment_date">결재일시</p>
-            <p class="progress">상태</p>
+            <p class="state">상태</p>
         </div>
         <c:forEach items="${list}" var="item"> 
         	<div class="a_move">
@@ -120,7 +125,7 @@ body {
 					</p>
 		            <p class="write_date"><c:out value="${item.writeDay}"/></p>
 		            <p class="payment_date"><c:out value="${item.appDay1}"/></p>
-		            <p class="progress"><c:out value="${item.state}"/></p>
+		            <p class="state"><c:out value="${item.state}"/></p>
 	            </div>
             </a>
             </div>

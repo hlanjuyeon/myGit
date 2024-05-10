@@ -43,7 +43,10 @@
 height: 100%;
 }
 
-
+.approval_move {
+	background-color: #3D9970;
+	color: white !important;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function() {

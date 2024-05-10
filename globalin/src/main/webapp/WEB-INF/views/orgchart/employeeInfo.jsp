@@ -100,6 +100,11 @@ height: 100%;
 	cursor: pointer;
 	outline: none;
 }
+
+        .orgchart_move {
+	background-color: #3D9970;
+	color: white !important;
+}
     </style>
 </head>
 <body>

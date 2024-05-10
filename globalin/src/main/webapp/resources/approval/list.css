@@ -1,14 +1,14 @@
-/* 노트북 & PC */ 
+/* �끂�듃遺� & PC */ 
 @media all and (min-width:1080px) and (max-width:1920px) {
     
 } 
   
-/* 테블릿 가로, 테블릿 세로 */ 
+/* �뀒釉붾┸ 媛�濡�, �뀒釉붾┸ �꽭濡� */ 
 @media all and (min-width:768px) and (max-width:1024px) {
     
 } 
   
-/* 모바일 가로, 모바일 세로 */ 
+/* 紐⑤컮�씪 媛�濡�, 紐⑤컮�씪 �꽭濡� */ 
 @media all and (min-width:360px) and (max-width:800px) {
    
 }
@@ -39,6 +39,7 @@ p {
     align-items: center;
     justify-content: center;
     text-align: center;
+    margin-top: 1rem !important;
 }
 
 .list_top {
@@ -71,7 +72,7 @@ p.payment_date {
 	width: 20%;
 }
 
-p.progress{
+p.state{
 	width: 5%;
 }
 

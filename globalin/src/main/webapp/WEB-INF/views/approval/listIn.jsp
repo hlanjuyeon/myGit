@@ -11,8 +11,6 @@
 	<!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <link rel="stylesheet" href="/resources/approval/list.css" type="text/css" media="all">
 	<title>전자결재</title>
 
 <script type="text/javascript">
@@ -70,7 +68,10 @@ $(document).ready(function() {
     });
     
     document.querySelector('#inbox').checked = true;
+    
+    
 });
+$('p').css('margin-top','');
 </script>
 <style type="text/css">
 body {
@@ -87,6 +88,11 @@ body {
     display: flex;
         width: 1850px;
 }
+
+.approval_move {
+	background-color: #3D9970;
+	color: white !important;
+}
 </style>
 </head>
 <body>
@@ -102,7 +108,7 @@ body {
             <p class="writer">작성자</p>
             <p class="write_date">작성일시</p>
             <p class="payment_date">결재일시</p>
-            <p class="progress">상태</p>
+            <p class="state">상태</p>
         </div>
         <c:forEach items="${list}" var="item"> 
         	<div class="a_move">
@@ -123,7 +129,7 @@ body {
 		            <p class="payment_date">
 		            	<c:out value="${item.appState1 == '반려' || item.appState2 == '반려' || item.appState3 == '반려'? item.rejectDay : item.appDay}"/>
 		            </p>
- 		            <p class="progress"><c:out value="${item.state}"/></p>
+ 		            <p class="state"><c:out value="${item.state}"/></p>
 	            </div>
             </a>
             </div>
@@ -194,4 +200,5 @@ body {
     	<input type="hidden" name="loginNo" value='<c:out value="${employee.no}"/>'>
     </form>
 </body>
+<link rel="stylesheet" href="/resources/approval/list.css" type="text/css" media="all">
 </html>

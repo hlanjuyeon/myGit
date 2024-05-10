@@ -110,8 +110,11 @@ height: 100%;
             overflow-x: hidden;
             padding-top: 20px;
         }
+        .orgchart_move {
+	background-color: #3D9970;
+	color: white !important;
+}
 </style>
-
 </head>
 <body>
     <%@ include file="/WEB-INF/views/main/header.jsp"%>

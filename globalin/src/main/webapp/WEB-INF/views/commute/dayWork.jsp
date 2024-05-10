@@ -19,7 +19,6 @@
 
 	body {
 	width: 1800px;
-	height: 1000px;
 }
 
 .body_css {
@@ -56,6 +55,11 @@ td {
 
 .title {
 	margin-left : 20px;
+}
+
+.dayWork_move {
+	background-color: #3D9970;
+	color: white !important;
 }
 </style>
 </head>

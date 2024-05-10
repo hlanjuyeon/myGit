@@ -88,6 +88,11 @@ height: 150px;
 	border: 2px solid #3D9970;
 	cursor: pointer;
 }
+
+.mypage_move {
+	background-color: #3D9970;
+	color: white !important;
+}
 </style>
 </head>
 <body>

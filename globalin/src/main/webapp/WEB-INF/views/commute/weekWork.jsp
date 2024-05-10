@@ -57,6 +57,11 @@ td {
 .title {
 	margin-left : 20px;
 }
+
+.weekWork_move {
+	background-color: #3D9970;
+	color: white !important;
+}
 </style>
 </head>
 <body>

@@ -41,6 +41,10 @@
 height: 100%;
 }
 
+.calendar_move {
+	background-color: #3D9970;
+	color: white !important;
+}
    </style>
     <script>
 	    $(function(){	    		

@@ -11,6 +11,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src='https://momentjs.com/downloads/moment.js'></script>
 <title>일정추가</title>
+<style type="text/css">
+.calendar_move {
+	background-color: #3D9970;
+	color: white !important;
+}
+</style>
 <script type="text/javascript">
 $(function() {		
 	  var request = $.ajax({

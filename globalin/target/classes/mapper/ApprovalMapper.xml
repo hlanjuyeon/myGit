@@ -10,11 +10,20 @@
                         <when test="type == 'T'.toString()">
                             title like '%'||#{keyword}||'%' 
                         </when>
+                        <when test="type == 'T'.toString()">
+                            titleReply like '%'||#{keyword}||'%' 
+                        </when>
                         <when test="type == 'C'.toString()">
                             content like '%'||#{keyword}||'%' 
                         </when>
+                        <when test="type == 'C'.toString()">
+                            contentReply like '%'||#{keyword}||'%' 
+                        </when>
                         <when test="type == 'W'.toString()">
                             writer like '%'||#{keyword}||'%' 
+                        </when>
+                        <when test="type == 'W'.toString()">
+                            writerReply like '%'||#{keyword}||'%' 
                         </when>
                         <when test="type == 'P'.toString()">
                             progress like '%'||#{keyword}||'%' 
@@ -37,7 +46,7 @@
 		    a.titleReply, a.contentReply, a.replyDept, a.writerReply,
 		    a.yearUseDays, a.yearUseDateStart, a.yearUseDateEnd, a.yearAmPm, a.yearReason
 		FROM APPROVAL a
-		JOIN employee emp1 ON a.appNo1 = emp1.no
+		LEFT JOIN employee emp1 ON a.appNo1 = emp1.no
 		LEFT JOIN employee emp2 ON a.appNo2 = emp2.no
 		LEFT JOIN employee emp3 ON a.appNo3 = emp3.no
 		LEFT JOIN employee emp4 ON a.refNo1 = emp4.no
@@ -102,7 +111,7 @@
     <!-- out 게시물 목록(페이징) : 발신함 -->
     <select id="getListPagingOut" resultType="com.globalin.shine.domain.approval.ApprovalVO">
     <![CDATA[
-		select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+		select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply, content,
 				appNo1, appNo2, appNo3, refNo1, refNo2, GREATEST(appDay1, appDay2, appDay3) AS appDay, writerReply,
 				appState1, appState2, appState3,
 				CASE
@@ -111,14 +120,14 @@
 					WHEN (appState3 = '반려') THEN appDay3  
 				END AS rejectDay
 		from(
-		    select rownum as rn, no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+		    select rownum as rn, no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply, content,
 		    		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3, writerReply
 		    from (
-		        select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+		        select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply, content, 
 		        		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3, writerReply
 		        from approval
 		        WHERE temp = '상신' 
-		        AND writerNo = #{loginNo}
+		        AND (writerNo = #{loginNo} OR writerReplyNo = #{loginNo})
 		        order by originNo desc, groupOrd asc
 		    )
 		    where rownum <= #{pageNum} * #{amount} 		    
@@ -134,7 +143,7 @@
     <!-- in 게시물 목록(페이징) : 수신함 -->
     <select id="getListPagingIn" resultType="com.globalin.shine.domain.approval.ApprovalVO">
     <![CDATA[
-		select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+		select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply, content,
 				appNo1, appNo2, appNo3, refNo1, refNo2, GREATEST(appDay1, appDay2, appDay3) AS appDay, writerReply,
 				appState1, appState2, appState3,
 				CASE
@@ -143,17 +152,17 @@
 					WHEN (appState3 = '반려') THEN appDay3
 				END AS rejectDay
 		from(
-		    select rownum as rn, no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+		    select rownum as rn, no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply, content, 
 		    		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3, writerReply
 		    from (
-		        select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply,
+		        select no, form, title, writer, writeDay, state, originNo, groupOrd, temp, titleReply, content, 
 		        		appNo1, appNo2, appNo3, refNo1, refNo2, appDay1, appDay2, appDay3, appState1, appState2, appState3, writerReply
 		        from approval
 		        WHERE temp = '상신' 
 				AND (appNo1 = #{loginNo} or appNo2 = #{loginNo} or appNo3 = #{loginNo} or refNo1 = #{loginNo} or refNo2 = #{loginNo})
 		        order by originNo desc, groupOrd asc
 		    )
-		    where rownum <= #{pageNum} * #{amount} 		    
+		    where rownum <= #{pageNum} * #{amount} 	    
 		]]>            
 		    <if test="keyword != null">
 		        <include refid="criteria"></include> 
@@ -166,14 +175,14 @@
 	<!-- temp 게시물 목록(페이징) : 임시저장 -->
     <select id="getTempList" resultType="com.globalin.shine.domain.approval.ApprovalVO">
     <![CDATA[
-		select no, form, title, writer, writeDay, updateDay, state, originNo, groupOrd, temp, titleReply, writerReply
+		select no, form, title, writer, writeDay, updateDay, state, originNo, groupOrd, temp, titleReply, writerReply, writerReplyNo
 		from(
-		    select rownum as rn, no, form, title, writer, updateDay, writeDay, state, originNo, groupOrd, temp, titleReply, writerReply
+		    select rownum as rn, no, form, title, writer, updateDay, writeDay, state, originNo, groupOrd, temp, titleReply, writerReply, writerReplyNo
 		    from (
-		        select no, form, title, writer, writeDay, updateDay, state, originNo, groupOrd, temp, titleReply, writerReply
+		        select no, form, title, writer, writeDay, updateDay, state, originNo, groupOrd, temp, titleReply, writerReply, writerReplyNo
 		        from approval
 		        WHERE temp = '임시저장' 
-				AND writerNo = #{loginNo}
+				AND (writerNo = #{loginNo} OR writerReplyNo = #{loginNo})
 		        order by originNo desc, groupOrd asc
 		    )
 		    where rownum <= #{pageNum} * #{amount} 		    
@@ -247,7 +256,7 @@
 	</select>
 	<select id="getUserList" resultType="employeeVO">
     	SELECT 
-    		no, Name, DeptName, ID, PW
+    		no, Name, DeptName, email, ID, PW
     	FROM employee
 	</select>
 	<update id="updateApp">
@@ -275,17 +284,17 @@
 	</update>
 	<select id="selectTotal" resultType="dayOffVO">
 		select Total from dayOffinfo
-		where no = #{no}
+		where no = #{loginNo}
 	</select>
 	
 	<select id="selectRemind" resultType="dayOffVO">
 		select Remind from dayOffinfo
-		where no = #{no}
+		where no = #{loginNo}
 	</select>
 	
 	<select id="selectTemp" resultType="com.globalin.shine.domain.approval.ApprovalVO">
 		select count(*) as countTemp from approval
-		where temp = '임시저장' and writerno = #{no}
+		where temp = '임시저장' and writerNo = #{loginNo}
 	</select>
 	
 	<!-- 미결재 count -->

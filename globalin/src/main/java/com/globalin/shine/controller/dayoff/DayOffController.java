@@ -35,7 +35,7 @@ public class DayOffController {
 		model.addAttribute("no", employeeService.getVOById((String) session.getAttribute("id")).getNo());
 		model.addAttribute("dayOffInfo",dayOffService.getSvInfo(no));
 		model.addAttribute("dayOffList",dayOffService.getSvList(no));
-		}
+	}
 	
 	@GetMapping("/list")
 	public void readInfo(Model model, HttpServletRequest request) {
@@ -56,6 +56,7 @@ public class DayOffController {
 		model.addAttribute("dayOffList",dayOffService.viewDetailsList(dayOffVO.getNo()));
 		return "/dayOff/modify";
 	}
+	
 	@PostMapping("/modify")
 	public String modify(DayOffVO dayOffVO) {
 		dayOffService.modifyInfo(dayOffVO);

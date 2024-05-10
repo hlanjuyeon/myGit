@@ -16,4 +16,5 @@ public class DayOffVO {
 	private int kind;
 	private String useDate;
 	private String reason;
+	private int loginNo;
 }
